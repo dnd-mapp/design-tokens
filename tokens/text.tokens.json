@@ -1,0 +1,154 @@
+{
+    "text": {
+        "$type": "typography",
+        "display": {
+            "$value": {
+                "fontFamily": "{font-family.sans}",
+                "fontSize": "{font-size.48}",
+                "fontWeight": "{font-weight.700}",
+                "lineHeight": "{line-height.56}",
+                "letterSpacing": {
+                    "value": 0,
+                    "unit": "px"
+                }
+            },
+            "$description": "Page titles on documentation pages."
+        },
+        "heading": {
+            "large": {
+                "$value": {
+                    "fontFamily": "{font-family.sans}",
+                    "fontSize": "{font-size.32}",
+                    "fontWeight": "{font-weight.600}",
+                    "lineHeight": "{line-height.40}",
+                    "letterSpacing": {
+                        "value": 0,
+                        "unit": "px"
+                    }
+                },
+                "$description": "Top-level headings in the app, such as a view title."
+            },
+            "medium": {
+                "$value": {
+                    "fontFamily": "{font-family.sans}",
+                    "fontSize": "{font-size.24}",
+                    "fontWeight": "{font-weight.600}",
+                    "lineHeight": "{line-height.32}",
+                    "letterSpacing": {
+                        "value": 0,
+                        "unit": "px"
+                    }
+                },
+                "$description": "Section headings."
+            },
+            "small": {
+                "$value": {
+                    "fontFamily": "{font-family.sans}",
+                    "fontSize": "{font-size.20}",
+                    "fontWeight": "{font-weight.600}",
+                    "lineHeight": "{line-height.28}",
+                    "letterSpacing": {
+                        "value": 0,
+                        "unit": "px"
+                    }
+                },
+                "$description": "Subsection headings, and titles of cards and dialogs."
+            }
+        },
+        "body": {
+            "medium": {
+                "$value": {
+                    "fontFamily": "{font-family.sans}",
+                    "fontSize": "{font-size.16}",
+                    "fontWeight": "{font-weight.400}",
+                    "lineHeight": "{line-height.24}",
+                    "letterSpacing": {
+                        "value": 0,
+                        "unit": "px"
+                    }
+                },
+                "$description": "The default text style."
+            },
+            "small": {
+                "$value": {
+                    "fontFamily": "{font-family.sans}",
+                    "fontSize": "{font-size.14}",
+                    "fontWeight": "{font-weight.400}",
+                    "lineHeight": "{line-height.20}",
+                    "letterSpacing": {
+                        "value": 0,
+                        "unit": "px"
+                    }
+                },
+                "$description": "Body text where space is tight, such as map tool panels."
+            }
+        },
+        "label": {
+            "large": {
+                "$value": {
+                    "fontFamily": "{font-family.sans}",
+                    "fontSize": "{font-size.16}",
+                    "fontWeight": "{font-weight.500}",
+                    "lineHeight": "{line-height.24}",
+                    "letterSpacing": {
+                        "value": 0,
+                        "unit": "px"
+                    }
+                },
+                "$description": "Labels on large controls, and names in lists."
+            },
+            "medium": {
+                "$value": {
+                    "fontFamily": "{font-family.sans}",
+                    "fontSize": "{font-size.14}",
+                    "fontWeight": "{font-weight.500}",
+                    "lineHeight": "{line-height.20}",
+                    "letterSpacing": {
+                        "value": 0,
+                        "unit": "px"
+                    }
+                },
+                "$description": "Labels on buttons, fields, and other controls."
+            },
+            "small": {
+                "$value": {
+                    "fontFamily": "{font-family.sans}",
+                    "fontSize": "{font-size.12}",
+                    "fontWeight": "{font-weight.500}",
+                    "lineHeight": "{line-height.16}",
+                    "letterSpacing": {
+                        "value": 0,
+                        "unit": "px"
+                    }
+                },
+                "$description": "Labels on small controls, such as badges."
+            }
+        },
+        "caption": {
+            "$value": {
+                "fontFamily": "{font-family.sans}",
+                "fontSize": "{font-size.12}",
+                "fontWeight": "{font-weight.400}",
+                "lineHeight": "{line-height.16}",
+                "letterSpacing": {
+                    "value": 0,
+                    "unit": "px"
+                }
+            },
+            "$description": "Helper text, metadata, and footnotes."
+        },
+        "code": {
+            "$value": {
+                "fontFamily": "{font-family.mono}",
+                "fontSize": "{font-size.14}",
+                "fontWeight": "{font-weight.400}",
+                "lineHeight": "{line-height.20}",
+                "letterSpacing": {
+                    "value": 0,
+                    "unit": "px"
+                }
+            },
+            "$description": "Code, token names, and other literal values."
+        }
+    }
+}
