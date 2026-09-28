@@ -59,4 +59,44 @@ describe('resolveTokens', () => {
     it('should reject a circular alias', () => {
         expect(() => resolveTokens([token('a', '{b}'), token('b', '{a}')])).toThrow('file: circular alias a -> b -> a');
     });
+
+    describe('with a typography token', () => {
+        const size = { value: 1, unit: 'rem' };
+        const typography = (members: object) =>
+            token('text.body', { fontSize: '{font-size.16}', lineHeight: 1.5, ...members }, 'typography');
+
+        it('should resolve the aliases of its members, and keep the other members', () => {
+            const resolved = resolveTokens([typography({}), token('font-size.16', size, 'dimension')]);
+
+            expect(resolved.get('text.body')).toEqual({ fontSize: size, lineHeight: 1.5 });
+        });
+
+        it('should accept every type that a member allows', () => {
+            const resolved = resolveTokens([
+                typography({ lineHeight: '{line-height.24}' }),
+                token('font-size.16', size, 'dimension'),
+                token('line-height.24', { value: 1.5, unit: 'rem' }, 'dimension'),
+            ]);
+
+            expect(resolved.get('text.body')).toMatchObject({ lineHeight: { value: 1.5, unit: 'rem' } });
+        });
+
+        it('should keep an alias in a member that typography does not have', () => {
+            const resolved = resolveTokens([typography({ color: '{a}' }), token('font-size.16', size, 'dimension')]);
+
+            expect(resolved.get('text.body')).toMatchObject({ color: '{a}' });
+        });
+
+        it('should reject a member that refers to a missing token', () => {
+            expect(() => resolveTokens([typography({})])).toThrow(
+                'file: the fontSize of "text.body" refers to "font-size.16", which does not exist',
+            );
+        });
+
+        it('should reject a member that refers to a token of another type', () => {
+            expect(() => resolveTokens([typography({}), token('font-size.16', 16, 'number')])).toThrow(
+                'file: the fontSize of "text.body" must refer to a dimension token, but "font-size.16" is a number token',
+            );
+        });
+    });
 });

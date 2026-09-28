@@ -24,6 +24,32 @@ const fontFamily: OutputToken = {
     extensions: undefined,
 };
 
+const shorthand = '400 1rem/1.5rem "JetBrains Mono", monospace';
+
+/** A part of a text style and its font shorthand, whose stylesheet values refer to other tokens. */
+const textStyle: OutputToken[] = [
+    {
+        path: ['text', 'code', 'font-size'],
+        type: 'dimension',
+        name: '--dma-text-code-font-size',
+        value: 'var(--dma-font-size-16)',
+        modeValues: same('1rem'),
+        resolvedValues: same({ value: 1, unit: 'rem' }),
+        description: undefined,
+        extensions: undefined,
+    },
+    {
+        path: ['text', 'code', 'font'],
+        type: 'typography',
+        name: '--dma-text-code-font',
+        value: 'var(--dma-text-code-font-size) var(--dma-text-code-font-family)',
+        modeValues: same(shorthand),
+        resolvedValues: same({ fontWeight: 400 }),
+        description: 'Code.',
+        extensions: undefined,
+    },
+];
+
 const tokens: OutputToken[] = [
     {
         path: ['color', 'text', 'default'],
@@ -127,6 +153,16 @@ describe('createJs', () => {
     });
 });
 
+describe('createJs with a text style', () => {
+    it('should give the values without the var() references of the stylesheet', () => {
+        const js = createJs(textStyle);
+
+        expect(js).toContain("font: 'var(--dma-text-code-font)',");
+        expect(js).toContain("'font-size': '1rem',");
+        expect(js).toContain(`font: '${shorthand}',`);
+    });
+});
+
 describe('createDts', () => {
     it('should declare both trees with literal types, documented with the description and the value', () => {
         expect(createDts(tokens)).toBe(
@@ -173,6 +209,14 @@ describe('createDts', () => {
 
     it('should escape the end of a comment in a description', () => {
         expect(createDts([{ ...fontFamily, description: 'Ends */ early.' }])).toContain('/** Ends *\\/ early.');
+    });
+});
+
+describe('createDts with a text style', () => {
+    it('should document a reference with the resolved value', () => {
+        expect(createDts(textStyle)).toContain(
+            `/** Code. \`${shorthand}\` */\n            readonly font: 'var(--dma-text-code-font)';`,
+        );
     });
 });
 
@@ -299,5 +343,31 @@ describe('createTokensJson', () => {
         expect(JSON.parse(createTokensJson([text!], 'light'))).toEqual({
             color: { text: { default: { $type: 'color', $value: srgb('#000000', 0) } } },
         });
+    });
+});
+
+describe('createScss with a text style', () => {
+    it('should compile a font shorthand from the values map', () => {
+        const css = compileString(
+            `
+                @use 'sass:map';
+                @use 'tokens';
+
+                code {
+                    font: map.get(tokens.$values, 'text', 'code', 'font');
+                    font-size: map.get(tokens.$values, 'text', 'code', 'font-size') * 0.875;
+                }
+            `,
+            {
+                importers: [
+                    {
+                        canonicalize: (url) => (url === 'tokens' ? new URL('memory:tokens') : null),
+                        load: () => ({ contents: createScss(textStyle), syntax: 'scss' }),
+                    },
+                ],
+            },
+        ).css;
+
+        expect(css).toBe(['code {', `  font: ${shorthand};`, '  font-size: 0.875rem;', '}'].join('\n'));
     });
 });

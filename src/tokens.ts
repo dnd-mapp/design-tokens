@@ -1,9 +1,26 @@
 import { FIGMA_EXTENSION } from './constants.ts';
 
 /** The DTCG token types that the build supports. */
-export const TOKEN_TYPES = ['color', 'dimension', 'fontFamily', 'fontWeight', 'number'] as const;
+export const TOKEN_TYPES = ['color', 'dimension', 'fontFamily', 'fontWeight', 'number', 'typography'] as const;
 
 export type TokenType = (typeof TOKEN_TYPES)[number];
+
+/**
+ * The members of a typography value, and the token types that each member accepts, in the order of the CSS `font`
+ * shorthand parts.
+ *
+ * DTCG allows only a number for the line height. The token files also allow a dimension, because the Figma text styles
+ * bind their line heights to the `line-height` dimension tokens.
+ */
+export const TYPOGRAPHY_MEMBERS = {
+    fontFamily: ['fontFamily'],
+    fontSize: ['dimension'],
+    fontWeight: ['fontWeight'],
+    lineHeight: ['dimension', 'number'],
+    letterSpacing: ['dimension'],
+} as const satisfies Record<string, readonly TokenType[]>;
+
+export type TypographyMember = keyof typeof TYPOGRAPHY_MEMBERS;
 
 /** A single token from a token file, with the type it inherits from its groups applied. */
 export interface Token {

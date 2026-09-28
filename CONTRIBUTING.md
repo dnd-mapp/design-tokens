@@ -57,9 +57,9 @@ Import other files with the `.ts` extension. Node.js runs the build script witho
 
 ## Token files
 
-The token files follow the [DTCG format](https://www.designtokens.org/tr/2025.10/format/). Each Figma collection has its own file, named `<collection>.tokens.json`. A collection with modes has a file for each mode, named `<collection>.<mode>.tokens.json`.
+The token files follow the [DTCG format](https://www.designtokens.org/tr/2025.10/format/). Each Figma collection has its own file, named `<collection>.tokens.json`. A collection with modes has a file for each mode, named `<collection>.<mode>.tokens.json`. The text styles have a file of their own.
 
-| File                      | Figma collection    | Published |
+| File                      | Figma source        | Published |
 |:--------------------------|:--------------------|:----------|
 | `primitives.tokens.json`  | `Primitives`        | No        |
 | `color.light.tokens.json` | `Color`, Light mode | Yes       |
@@ -67,16 +67,18 @@ The token files follow the [DTCG format](https://www.designtokens.org/tr/2025.10
 | `spacing.tokens.json`     | `Spacing`           | Yes       |
 | `typography.tokens.json`  | `Typography`        | Yes       |
 | `radius.tokens.json`      | `Radius`            | Yes       |
+| `text.tokens.json`        | The text styles     | Yes       |
 
 Each `/` in a variable name starts a nested group, so `color/text/default` becomes the `default` token in the `text` group of the `color` group. Set `$type` on the top-level group, and every token in it inherits it. Keep the order of the variables in Figma.
 
-| `$type`      | Figma variables                               | `$value` example                                                      |
+| `$type`      | In Figma                                      | `$value` example                                                      |
 |:-------------|:----------------------------------------------|:----------------------------------------------------------------------|
 | `color`      | Colors                                        | `{ "colorSpace": "srgb", "components": [1, 1, 1], "hex": "#ffffff" }` |
 | `dimension`  | Spacing, font sizes, line heights, and radius | `{ "value": 1, "unit": "rem" }`                                       |
 | `fontFamily` | Font families                                 | `["Inter", "system-ui", "sans-serif"]`                                |
 | `fontWeight` | Font weights                                  | `600`                                                                 |
 | `number`     | Other numbers                                 | `1.5`                                                                 |
+| `typography` | Text styles                                   | An object with the members that [Text styles](#text-styles) lists     |
 
 Follow these rules when you write a token file:
 
@@ -106,15 +108,55 @@ Follow these rules when you write a token file:
 }
 ```
 
-The build publishes every token except those in `primitives.tokens.json`. It resolves the aliases to primitives into plain values, so the primitives never reach the package. The files of each mode must define the same tokens.
+The build publishes every token except those in `primitives.tokens.json`. It resolves the aliases into plain values, so the primitives never reach the package. The parts of a text style are the one exception, as described under [Text styles](#text-styles). The files of each mode must define the same tokens.
+
+### Text styles
+
+Each text style is a `typography` token in `text.tokens.json`. Lowercase the name of the style and split it at each `/`, so `Heading/Large` becomes the `large` token in the `heading` group of the `text` group. Copy the description of the style into `$description`.
+
+A `typography` value has these members. Write each member that the style binds to a variable as an alias to that variable.
+
+| Member          | Figma field    | `$value` example                              |
+|:----------------|:---------------|:----------------------------------------------|
+| `fontFamily`    | Font family    | `"{font-family.sans}"`                        |
+| `fontSize`      | Font size      | `"{font-size.16}"`                            |
+| `fontWeight`    | Font weight    | `"{font-weight.400}"`                         |
+| `lineHeight`    | Line height    | `"{line-height.24}"`, a dimension or a number |
+| `letterSpacing` | Letter spacing | `{ "value": 0, "unit": "px" }`, a dimension   |
+
+DTCG allows only a number for `lineHeight`, as a multiple of the font size. The token files also allow a dimension, because the text styles bind their line heights to the `line-height` tokens. The DTCG token files that the build writes hold the multiple.
+
+```json
+{
+    "text": {
+        "$type": "typography",
+        "body": {
+            "medium": {
+                "$value": {
+                    "fontFamily": "{font-family.sans}",
+                    "fontSize": "{font-size.16}",
+                    "fontWeight": "{font-weight.400}",
+                    "lineHeight": "{line-height.24}",
+                    "letterSpacing": { "value": 0, "unit": "px" }
+                },
+                "$description": "The default text style."
+            }
+        }
+    }
+}
+```
+
+The build turns each text style into a token for each member, such as `text.body.medium.font-size`, and a `font` token with the CSS `font` shorthand. A member that refers to a published token gets a `var()` reference to it in the stylesheet. The `font` token composes the `var()` references of the other tokens of the style.
+
+### Order of the tokens
 
 JavaScript puts object keys that are whole numbers first, in ascending order. So the steps of a scale, such as `spacing/8` and `spacing/16`, come out in ascending order, whatever their order in the file.
 
 ## Updating the tokens
 
 1. Publish the `Design system` library in Figma.
-2. Export the variables of every collection and mode from the `Design system` file.
-3. Convert the export into the token files, following the rules under [Token files](#token-files).
+2. Export the variables of every collection and mode, and read the text styles, from the `Design system` file.
+3. Convert the export and the text styles into the token files, following the rules under [Token files](#token-files).
 4. Run `pnpm run build`, and check `dist/tokens.css` for the changes that you expect.
 5. Record the changes in `CHANGELOG.md`, and open a pull request.
 
@@ -126,7 +168,7 @@ The build stops with an error, and writes nothing, when a token file breaks a ru
 
 - The names of the files, groups, and tokens.
 - The type and the shape of every value.
-- That every alias refers to an existing token of the same type, without a cycle.
+- That every alias refers to an existing token of the same type, without a cycle. An alias in a text style must refer to a type that its member accepts.
 - That every mode defines the same tokens, and that only colors differ between the modes.
 - That the WEB code syntax matches the name of the custom property.
 

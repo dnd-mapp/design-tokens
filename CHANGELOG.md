@@ -15,5 +15,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - The `values` object from the package root, with the CSS value of every token. A color has a `light` and a `dark` value.
 - A Sass module, found through the `sass` export condition, or as `@dnd-mapp/design-tokens/index.scss`. It has a variable with the `var()` reference of every token, and the `$tokens` and `$values` maps.
 - The DTCG token files `light.tokens.json` and `dark.tokens.json`, with the aliases resolved.
+- A group of tokens for each of the 11 text styles of the `Design system` Figma library, such as `Body/Medium`. The `font-family`, `font-size`, `font-weight`, `line-height`, and `letter-spacing` tokens of a style refer to the typography tokens.
+- A `font` token for each text style, such as `--dma-text-body-medium-font`, with a CSS `font` shorthand composed from the tokens of the style. The DTCG token files hold it as a `typography` token.
 
 [Unreleased]: https://github.com/dnd-mapp/design-tokens/commits/main

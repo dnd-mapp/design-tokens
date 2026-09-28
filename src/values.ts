@@ -1,4 +1,4 @@
-import { isObject, type TokenType } from './tokens.ts';
+import { isObject, type TokenType, TYPOGRAPHY_MEMBERS, type TypographyMember } from './tokens.ts';
 
 /** Font families that CSS defines as keywords. They must stay unquoted. */
 const GENERIC_FAMILIES = new Set([
@@ -86,12 +86,38 @@ function formatNumber(value: unknown): string {
     return String(value);
 }
 
+/** Returns the token type of a resolved typography member. A line height can be a number or a dimension. */
+export function typographyMemberType(member: TypographyMember, value: unknown): TokenType {
+    const types: readonly TokenType[] = TYPOGRAPHY_MEMBERS[member];
+
+    return typeof value === 'number' && types.includes('number') ? 'number' : types[0]!;
+}
+
+/** Formats a typography value as a CSS `font` shorthand. The shorthand cannot set the letter spacing. */
+function formatTypography(value: unknown): string {
+    const members = Object.keys(TYPOGRAPHY_MEMBERS) as TypographyMember[];
+
+    if (!isObject(value) || Object.keys(value).length !== members.length || !members.every((m) => m in value)) {
+        throw new Error(`a typography value must have exactly the members ${members.join(', ')}`);
+    }
+    const [family, size, weight, lineHeight] = members.map((member) => {
+        try {
+            return formatValue(typographyMemberType(member, value[member]), value[member]);
+        } catch (error) {
+            throw new Error(`its ${member} is invalid, ${(error as Error).message}`, { cause: error });
+        }
+    });
+
+    return `${weight} ${size}/${lineHeight} ${family}`;
+}
+
 const formatters: Record<TokenType, (value: unknown) => string> = {
     color: formatColor,
     dimension: formatDimension,
     fontFamily: formatFontFamily,
     fontWeight: formatFontWeight,
     number: formatNumber,
+    typography: formatTypography,
 };
 
 /**

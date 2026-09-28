@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { srgb, tokenFiles } from '../testing/token-files.ts';
-import { assembleTokens, type TokenFile } from './assemble.ts';
+import { assembleTokens, type OutputToken, type TokenFile } from './assemble.ts';
 
 function colorFile(name: string, color: object): TokenFile {
     return { name, content: { color: { $type: 'color', ...color } } };
@@ -118,5 +118,121 @@ describe('assembleTokens', () => {
         expect(() => assembleTokens(files)).toThrow(
             'spacing.light.tokens.json: "spacing.gap" differs between the modes, which only color tokens may do',
         );
+    });
+
+    describe('with a typography token', () => {
+        const scale: TokenFile = {
+            name: 'typography.tokens.json',
+            content: {
+                'font-family': { $type: 'fontFamily', sans: { $value: ['Inter', 'sans-serif'] } },
+                'font-size': { '$type': 'dimension', '16': { $value: { value: 1, unit: 'rem' } } },
+            },
+        };
+        const primitives: TokenFile = {
+            name: 'primitives.tokens.json',
+            content: { size: { '$type': 'dimension', '24': { $value: { value: 1.5, unit: 'rem' } } } },
+        };
+        const extensions = { 'com.figma': { scopes: [] } };
+        const body = {
+            fontFamily: '{font-family.sans}',
+            fontSize: '{font-size.16}',
+            fontWeight: 400,
+            lineHeight: '{size.24}',
+            letterSpacing: { value: 0, unit: 'px' },
+        };
+
+        function assembleText(text: object): OutputToken[] {
+            const file = { name: 'text.tokens.json', content: { text: { $type: 'typography', ...text } } };
+
+            return assembleTokens([primitives, file, scale]).filter((token) => token.path[0] === 'text');
+        }
+
+        it('should publish a token for each member, and a font shorthand that composes them', () => {
+            const tokens = assembleText({
+                body: { $value: body, $description: 'Body text.', $extensions: extensions },
+            });
+
+            expect(tokens.map((token) => [token.name, token.type, token.value])).toEqual([
+                ['--dma-text-body-font-family', 'fontFamily', 'var(--dma-font-family-sans)'],
+                ['--dma-text-body-font-size', 'dimension', 'var(--dma-font-size-16)'],
+                ['--dma-text-body-font-weight', 'fontWeight', '400'],
+                ['--dma-text-body-line-height', 'dimension', '1.5rem'],
+                ['--dma-text-body-letter-spacing', 'dimension', '0'],
+                [
+                    '--dma-text-body-font',
+                    'typography',
+                    'var(--dma-text-body-font-weight) var(--dma-text-body-font-size)/var(--dma-text-body-line-height) var(--dma-text-body-font-family)',
+                ],
+            ]);
+            expect(tokens[1]).toEqual({
+                path: ['text', 'body', 'font-size'],
+                type: 'dimension',
+                name: '--dma-text-body-font-size',
+                value: 'var(--dma-font-size-16)',
+                modeValues: { light: '1rem', dark: '1rem' },
+                resolvedValues: { light: { value: 1, unit: 'rem' }, dark: { value: 1, unit: 'rem' } },
+                description: undefined,
+                extensions: undefined,
+            });
+        });
+
+        it('should give the font shorthand the resolved value, and a DTCG line height as a multiple of the font size', () => {
+            const [font] = assembleText({
+                body: { $value: body, $description: 'Body text.', $extensions: extensions },
+            }).slice(-1);
+            const resolved = {
+                fontFamily: ['Inter', 'sans-serif'],
+                fontSize: { value: 1, unit: 'rem' },
+                fontWeight: 400,
+                lineHeight: 1.5,
+                letterSpacing: { value: 0, unit: 'px' },
+            };
+
+            expect(font).toMatchObject({
+                path: ['text', 'body', 'font'],
+                modeValues: { light: '400 1rem/1.5rem Inter, sans-serif', dark: '400 1rem/1.5rem Inter, sans-serif' },
+                resolvedValues: { light: resolved, dark: resolved },
+                description: 'Body text.',
+                extensions,
+            });
+        });
+
+        it('should keep a line height that is a number', () => {
+            const tokens = assembleText({ body: { $value: { ...body, lineHeight: 1.25 } } });
+
+            expect(tokens[3]).toMatchObject({ type: 'number', value: '1.25' });
+            expect(tokens[5]?.resolvedValues.light).toMatchObject({ lineHeight: 1.25 });
+        });
+
+        it('should resolve the members of a typography token that refers to another one', () => {
+            const tokens = assembleText({ body: { $value: body }, alias: { $value: '{text.body}' } });
+
+            expect(tokens.slice(6).map((token) => [token.name, token.value])).toEqual([
+                ['--dma-text-alias-font-family', 'Inter, sans-serif'],
+                ['--dma-text-alias-font-size', '1rem'],
+                ['--dma-text-alias-font-weight', '400'],
+                ['--dma-text-alias-line-height', '1.5rem'],
+                ['--dma-text-alias-letter-spacing', '0'],
+                [
+                    '--dma-text-alias-font',
+                    'var(--dma-text-alias-font-weight) var(--dma-text-alias-font-size)/var(--dma-text-alias-line-height) var(--dma-text-alias-font-family)',
+                ],
+            ]);
+        });
+
+        it.each([
+            ['another unit', { value: 24, unit: 'px' }, body.fontSize],
+            ['a font size of 0', { value: 1.5, unit: 'rem' }, { value: 0, unit: 'rem' }],
+        ])('should reject a line height in %s', (_, lineHeight, fontSize) => {
+            expect(() => assembleText({ body: { $value: { ...body, fontSize, lineHeight } } })).toThrow(
+                'text.tokens.json: "text.body" needs a font size other than 0, and a line height in the same unit',
+            );
+        });
+
+        it('should reject an invalid member, and name the token', () => {
+            expect(() => assembleText({ body: { $value: { ...body, fontWeight: 'bold' } } })).toThrow(
+                'text.tokens.json: "text.body" has an invalid value, its fontWeight is invalid',
+            );
+        });
     });
 });

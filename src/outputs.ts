@@ -81,12 +81,20 @@ function reference(token: OutputToken): string {
 }
 
 /**
+ * Returns the CSS value of a token without `var()` references, which the stylesheet uses for the parts of a text style.
+ * Only colors differ between the modes, so any other token has the same value in every mode.
+ */
+function resolvedValue(token: OutputToken): string {
+    return token.type === 'color' ? token.value : token.modeValues[MODES[0]];
+}
+
+/**
  * Formats the value of a token for the `values` object. A color has a value for each mode, even when the modes share
  * it, so every color has the same shape.
  */
 function formatJsValue(token: OutputToken, format: (mode: Mode, value: string) => string, separator: string): string {
     if (token.type !== 'color') {
-        return quote(token.value);
+        return quote(resolvedValue(token));
     }
     return `{ ${MODES.map((mode) => format(mode, quote(token.modeValues[mode]))).join(separator)} }`;
 }
@@ -143,7 +151,7 @@ export function createDts(tokens: OutputToken[]): string {
         key: formatJsKey,
         openGroup: (key) => `readonly ${key}: {`,
         closeGroup: '};',
-        token: (key, token) => [...formatJsDoc(token, token.value), `readonly ${key}: ${reference(token)};`],
+        token: (key, token) => [...formatJsDoc(token, resolvedValue(token)), `readonly ${key}: ${reference(token)};`],
     });
     const values = formatMembers(tokens, {
         key: formatJsKey,
@@ -181,8 +189,10 @@ function formatScssValue(token: OutputToken): string {
     if (token.type === 'color') {
         return `(${MODES.map((mode) => `${quote(mode)}: ${token.modeValues[mode]}`).join(', ')})`;
     }
+    const value = resolvedValue(token);
+
     // A font stack is a comma-separated list, so it needs parentheses inside a map.
-    return token.type === 'fontFamily' ? `(${token.value})` : token.value;
+    return token.type === 'fontFamily' || token.type === 'typography' ? `(${value})` : value;
 }
 
 /**
@@ -194,7 +204,7 @@ function formatScssValue(token: OutputToken): string {
 export function createScss(tokens: OutputToken[]): string {
     const variables = tokens.flatMap((token, index) => [
         ...(token.path[0] === tokens[index - 1]?.path[0] ? [] : ['']),
-        ...formatDoc('///', token, token.value),
+        ...formatDoc('///', token, resolvedValue(token)),
         `${scssVariable(token)}: var(${token.name});`,
     ]);
     const map = (token: (key: string, token: OutputToken) => string[]): string[] =>

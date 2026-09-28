@@ -1,7 +1,15 @@
 import { CSS_PREFIX, type Mode, MODES, PRIVATE_COLLECTIONS, TOKEN_FILE_EXTENSION } from './constants.ts';
-import { resolveTokens } from './resolve.ts';
-import { collectTokens, formatPath, type Token, type TokenType } from './tokens.ts';
-import { formatValue } from './values.ts';
+import { aliasTarget, resolveTokens } from './resolve.ts';
+import {
+    collectTokens,
+    formatPath,
+    isObject,
+    type Token,
+    type TokenType,
+    TYPOGRAPHY_MEMBERS,
+    type TypographyMember,
+} from './tokens.ts';
+import { formatValue, typographyMemberType } from './values.ts';
 
 /** A token file and its parsed content. */
 export interface TokenFile {
@@ -68,12 +76,118 @@ function checkCodeSyntax(token: Token, name: string): void {
     }
 }
 
+function cssName(path: string[]): string {
+    return `${CSS_PREFIX}${path.join('-')}`;
+}
+
+/**
+ * Creates a published token from its value in each mode.
+ *
+ * @param source The token in the token file, for its description, extensions, and error messages.
+ * @param path The path of the published token, which differs from the source for the parts of a typography token.
+ */
+function createOutputToken(source: Token, path: string[], type: TokenType, resolvedValues: unknown[]): OutputToken {
+    const where = `${source.source}: "${formatPath(path)}"`;
+    const values = resolvedValues.map((value) => {
+        try {
+            return formatValue(type, value);
+        } catch (error) {
+            throw new Error(`${where} has an invalid value, ${(error as Error).message}`, { cause: error });
+        }
+    });
+    const distinct = [...new Set(values)];
+
+    if (distinct.length > 1 && type !== 'color') {
+        throw new Error(`${where} differs between the modes, which only color tokens may do`);
+    }
+    return {
+        path,
+        type,
+        name: cssName(path),
+        value: distinct.length > 1 ? `light-dark(${values.join(', ')})` : distinct[0]!,
+        modeValues: byMode(values),
+        resolvedValues: byMode(resolvedValues),
+        description: source.description,
+        extensions: source.extensions,
+    };
+}
+
+/** Turns a camel case member name such as `fontSize` into a token name such as `font-size`. */
+function kebabCase(name: string): string {
+    return name.replaceAll(/[A-Z]/g, (letter) => `-${letter.toLowerCase()}`);
+}
+
+/**
+ * DTCG takes the line height of a typography value as a multiple of the font size, so a dimension becomes a ratio.
+ *
+ * @throws {Error} When the line height is not in the unit of the font size, or the font size is zero.
+ */
+function toDtcgTypography(source: Token, value: Record<string, unknown>): Record<string, unknown> {
+    const fontSize = value['fontSize'] as { value: number; unit: string };
+    const lineHeight = value['lineHeight'];
+
+    if (!isObject(lineHeight)) {
+        return value;
+    }
+    if (lineHeight['unit'] !== fontSize.unit || fontSize.value === 0) {
+        throw new Error(
+            `${source.source}: "${formatPath(source.path)}" needs a font size other than 0, and a line height in the same unit`,
+        );
+    }
+    return { ...value, lineHeight: (lineHeight['value'] as number) / fontSize.value };
+}
+
+/**
+ * Splits a typography token into a token for each member, such as `text.body.medium.font-size`, and a `font` token
+ * with the CSS `font` shorthand.
+ *
+ * A member that refers to a published token gets a `var()` reference to it in the stylesheet, so a text style keeps
+ * pointing at the typography tokens. The `font` token composes the `var()` references of the member tokens. The
+ * shorthand cannot set the letter spacing, so that stays a token of its own.
+ */
+function expandTypography(
+    token: Token,
+    font: OutputToken,
+    resolvedValues: unknown[],
+    names: Map<string, string>,
+): OutputToken[] {
+    const raw = isObject(token.value) ? token.value : {};
+    const members = Object.keys(TYPOGRAPHY_MEMBERS) as TypographyMember[];
+    const parts = members.map((member) => {
+        const memberValues = resolvedValues.map((value) => (value as Record<string, unknown>)[member]);
+        const type = typographyMemberType(member, memberValues[0]);
+        const part = createOutputToken(token, [...token.path, kebabCase(member)], type, memberValues);
+        const target = names.get(aliasTarget(raw[member]) ?? '');
+
+        return {
+            ...part,
+            value: target ? `var(${target})` : part.value,
+            description: undefined,
+            extensions: undefined,
+        };
+    });
+    const [family, size, weight, lineHeight] = parts.map((part) => `var(${part.name})`);
+
+    return [
+        ...parts,
+        {
+            ...font,
+            path: [...token.path, 'font'],
+            name: cssName([...token.path, 'font']),
+            value: `${weight} ${size}/${lineHeight} ${family}`,
+            resolvedValues: byMode(
+                resolvedValues.map((value) => toDtcgTypography(token, value as Record<string, unknown>)),
+            ),
+        },
+    ];
+}
+
 /**
  * Turns the token files into the tokens to publish.
  *
  * Files without a mode apply to every mode. The build resolves the aliases once per mode, so a token file of one mode
  * can refer to the shared tokens and to the tokens of the same mode. The tokens of the private collections are left
- * out of the result.
+ * out of the result. A typography token becomes a token for each of its members, and a `font` token.
  *
  * @param files The token files, in the order to publish their tokens.
  * @throws {Error} When a file name or token is not valid, an alias cannot be resolved, or the modes do not match.
@@ -98,38 +212,15 @@ export function assembleTokens(files: TokenFile[]): OutputToken[] {
     checkModes(modeTokens);
 
     const resolved = MODES.map((mode) => resolveTokens([...shared, ...modeTokens[mode]]));
+    const names = new Map(published.map((token) => [formatPath(token.path), cssName(token.path)]));
 
-    return published.map((token) => {
+    return published.flatMap((token) => {
         const path = formatPath(token.path);
-        const name = `${CSS_PREFIX}${token.path.join('-')}`;
-        checkCodeSyntax(token, name);
+        checkCodeSyntax(token, cssName(token.path));
 
         const resolvedValues = resolved.map((values) => values.get(path));
-        const values = resolvedValues.map((value) => {
-            try {
-                return formatValue(token.type, value);
-            } catch (error) {
-                throw new Error(`${token.source}: "${path}" has an invalid value, ${(error as Error).message}`, {
-                    cause: error,
-                });
-            }
-        });
-        const distinct = [...new Set(values)];
+        const output = createOutputToken(token, token.path, token.type, resolvedValues);
 
-        if (distinct.length > 1 && token.type !== 'color') {
-            throw new Error(`${token.source}: "${path}" differs between the modes, which only color tokens may do`);
-        }
-        const value = distinct.length > 1 ? `light-dark(${values.join(', ')})` : distinct[0]!;
-
-        return {
-            path: token.path,
-            type: token.type,
-            name,
-            value,
-            modeValues: byMode(values),
-            resolvedValues: byMode(resolvedValues),
-            description: token.description,
-            extensions: token.extensions,
-        };
+        return token.type === 'typography' ? expandTypography(token, output, resolvedValues, names) : [output];
     });
 }
