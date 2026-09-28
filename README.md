@@ -4,7 +4,7 @@
 [![npm version](https://img.shields.io/npm/v/@dnd-mapp/design-tokens)](https://www.npmjs.com/package/@dnd-mapp/design-tokens)
 [![license](https://img.shields.io/npm/l/@dnd-mapp/design-tokens)](LICENSE)
 
-The design tokens of the D&D Mapp Figma library, as CSS custom properties, typed constants, a Sass module, and DTCG token files.
+The design tokens of the D&D Mapp Figma library, as CSS custom properties, typed constants, a Sass module, and DTCG token files. The package also ships the fonts of the text styles, Inter and JetBrains Mono.
 
 The tokens come from the variables in the `Design system` Figma file. Every token has the name of its WEB code syntax in Figma, so Dev Mode and code use the same names. For example, `color/text/default` becomes `--dma-color-text-default`.
 
@@ -93,6 +93,21 @@ The `font` shorthand can't set the letter spacing, so that part has a token of i
 | `Label/Small`    | `--dma-text-label-small-*`    | Labels on small controls, such as badges             |
 | `Caption`        | `--dma-text-caption-*`        | Helper text, metadata, and footnotes                 |
 | `Code`           | `--dma-text-code-*`           | Code, token names, and other literal values          |
+
+### Fonts
+
+The text styles use Inter, and JetBrains Mono for code. The package includes both as variable fonts, with every weight, both upright and italic. Load their stylesheet once, next to the tokens.
+
+```css
+@import "@dnd-mapp/design-tokens/fonts.css";
+@import "@dnd-mapp/design-tokens/tokens.css";
+```
+
+The stylesheet declares the fonts with `@font-face` rules under the names that the font tokens use, `Inter` and `JetBrains Mono`. Each rule covers a subset of the characters, such as Latin or Cyrillic, so the browser only downloads the subsets that a page uses. The text shows in a fallback font until a font has loaded.
+
+The font files sit next to the stylesheet, and its `url()` references are relative. Bundlers such as Vite copy the files along with the stylesheet. Without a bundler, serve the `fonts` directory of the package, and link to its `fonts.css`.
+
+The italics are real italic fonts, so `font-style: italic` doesn't slant the upright letters.
 
 ### TypeScript and JavaScript
 
@@ -184,8 +199,6 @@ The package publishes the semantic colors, spacing, typography, and radius token
 | `radius`      | `--dma-radius-8`              | `0.5rem`, or `9999px` for `radius-full`       |
 | `text`        | `--dma-text-body-medium-font` | A `font` shorthand, or a part of a text style |
 
-The package does not load any fonts. Load Inter and JetBrains Mono in your app.
-
 ## Changelog
 
 Notable changes for consumers of this package are listed in the [changelog](CHANGELOG.md).
@@ -197,3 +210,5 @@ Contributions are welcome. See the [contributing guide](CONTRIBUTING.md) for det
 ## License
 
 [MIT](LICENSE) © D&D Mapp
+
+The fonts are licensed under the [SIL Open Font License 1.1](https://openfontlicense.org): Inter by The Inter Project Authors, and JetBrains Mono by The JetBrains Mono Project Authors. The package includes their licenses, as `fonts/inter-OFL.txt` and `fonts/jetbrains-mono-OFL.txt`.

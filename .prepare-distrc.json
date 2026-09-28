@@ -1,5 +1,5 @@
 {
     "$schema": "./node_modules/@dnd-mapp/package-builder/prepare-dist.schema.json",
     "clean": false,
-    "include": ["CHANGELOG.md", "README.md", "LICENSE"]
+    "include": ["CHANGELOG.md", "README.md", "LICENSE", "fonts"]
 }

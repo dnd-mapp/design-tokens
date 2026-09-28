@@ -44,6 +44,7 @@ The token files live in `tokens`. The build script lives in `src`, and most modu
 | File               | Purpose                                                                             |
 |:-------------------|:------------------------------------------------------------------------------------|
 | `tokens`           | The DTCG token files, one for each Figma collection and mode                        |
+| `fonts`            | The font files, their licenses, and `fonts.css`, published as they are              |
 | `src/build.ts`     | The script behind the `build` script. It runs on import                             |
 | `src/constants.ts` | The directories, the CSS prefix, the modes, and the private collections             |
 | `src/tokens.ts`    | Collects the tokens of a token file                                                 |
@@ -160,9 +161,21 @@ JavaScript puts object keys that are whole numbers first, in ascending order. So
 4. Run `pnpm run build`, and check `dist/tokens.css` for the changes that you expect.
 5. Record the changes in `CHANGELOG.md`, and open a pull request.
 
+## Updating the fonts
+
+The `fonts` directory holds the variable Inter and JetBrains Mono fonts from [Fontsource](https://fontsource.org), both upright and italic. It has a `.woff2` file for each subset and style, and `fonts.css` declares a `@font-face` rule for each file. Update them together:
+
+1. Download the files of the new Fontsource version from jsDelivr, for example `https://cdn.jsdelivr.net/npm/@fontsource-variable/inter@5.3.0/files/inter-latin-wght-normal.woff2`. Each subset has a `normal` and an `italic` file.
+2. Download the `LICENSE` file of each package, such as `https://cdn.jsdelivr.net/npm/@fontsource-variable/inter@5.3.0/LICENSE`, into `inter-OFL.txt` or `jetbrains-mono-OFL.txt`.
+3. Take the subsets and their `unicode-range` from the Fontsource API, such as `https://api.fontsource.org/v1/fonts/inter`, and update the rules in `fonts.css`.
+4. Update the Fontsource version in the comment at the top of `fonts.css`.
+5. Run `pnpm exec prepare-dist`, and check that the fonts load from `dist/fonts/fonts.css` in a browser.
+
+A new subset adds a file, which is a minor change. Removing a subset or a font is a major change.
+
 ## Building and testing
 
-The `build` script reads the token files and writes the outputs to `dist`: `tokens.css`, `index.js`, `index.d.ts`, `index.scss`, and a DTCG token file for each mode, such as `light.tokens.json`. The `prepublishOnly` script runs the build, and then `prepare-dist` from `@dnd-mapp/package-builder` adds the manifest and the docs.
+The `build` script reads the token files and writes the outputs to `dist`: `tokens.css`, `index.js`, `index.d.ts`, `index.scss`, and a DTCG token file for each mode, such as `light.tokens.json`. The `prepublishOnly` script runs the build, and then `prepare-dist` from `@dnd-mapp/package-builder` adds the manifest, the docs, and the `fonts` directory.
 
 The build stops with an error, and writes nothing, when a token file breaks a rule. It checks these things:
 
@@ -193,7 +206,7 @@ The `lint-md` script lints the Markdown files with markdownlint, and the `lint-t
 
 This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html). Record every notable change for consumers under `[Unreleased]` in `CHANGELOG.md`, using the [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) format.
 
-The names of the custom properties, the keys of the `tokens` and `values` objects, the names of the Sass variables and map keys, and the exported files are the public API.
+The names of the custom properties, the keys of the `tokens` and `values` objects, the names of the Sass variables and map keys, the font families in `fonts.css`, and the exported files are the public API.
 
 | Change                                                         | Version bump |
 |:---------------------------------------------------------------|:-------------|
