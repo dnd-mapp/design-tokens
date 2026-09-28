@@ -1,0 +1,296 @@
+{
+    "font-family": {
+        "$type": "fontFamily",
+        "sans": {
+            "$value": ["Inter", "system-ui", "sans-serif"],
+            "$description": "Inter, system-ui, sans-serif in code.",
+            "$extensions": {
+                "com.figma": {
+                    "scopes": ["FONT_FAMILY"],
+                    "codeSyntax": {
+                        "WEB": "var(--dma-font-family-sans)"
+                    }
+                }
+            }
+        },
+        "mono": {
+            "$value": ["JetBrains Mono", "ui-monospace", "monospace"],
+            "$description": "JetBrains Mono, ui-monospace, monospace in code.",
+            "$extensions": {
+                "com.figma": {
+                    "scopes": ["FONT_FAMILY"],
+                    "codeSyntax": {
+                        "WEB": "var(--dma-font-family-mono)"
+                    }
+                }
+            }
+        }
+    },
+    "font-size": {
+        "12": {
+            "$value": {
+                "value": 0.75,
+                "unit": "rem"
+            },
+            "$description": "0.75rem (12px) in code.",
+            "$extensions": {
+                "com.figma": {
+                    "scopes": ["FONT_SIZE"],
+                    "codeSyntax": {
+                        "WEB": "var(--dma-font-size-12)"
+                    }
+                }
+            }
+        },
+        "14": {
+            "$value": {
+                "value": 0.875,
+                "unit": "rem"
+            },
+            "$description": "0.875rem (14px) in code.",
+            "$extensions": {
+                "com.figma": {
+                    "scopes": ["FONT_SIZE"],
+                    "codeSyntax": {
+                        "WEB": "var(--dma-font-size-14)"
+                    }
+                }
+            }
+        },
+        "16": {
+            "$value": {
+                "value": 1,
+                "unit": "rem"
+            },
+            "$description": "1rem (16px) in code.",
+            "$extensions": {
+                "com.figma": {
+                    "scopes": ["FONT_SIZE"],
+                    "codeSyntax": {
+                        "WEB": "var(--dma-font-size-16)"
+                    }
+                }
+            }
+        },
+        "20": {
+            "$value": {
+                "value": 1.25,
+                "unit": "rem"
+            },
+            "$description": "1.25rem (20px) in code.",
+            "$extensions": {
+                "com.figma": {
+                    "scopes": ["FONT_SIZE"],
+                    "codeSyntax": {
+                        "WEB": "var(--dma-font-size-20)"
+                    }
+                }
+            }
+        },
+        "24": {
+            "$value": {
+                "value": 1.5,
+                "unit": "rem"
+            },
+            "$description": "1.5rem (24px) in code.",
+            "$extensions": {
+                "com.figma": {
+                    "scopes": ["FONT_SIZE"],
+                    "codeSyntax": {
+                        "WEB": "var(--dma-font-size-24)"
+                    }
+                }
+            }
+        },
+        "32": {
+            "$value": {
+                "value": 2,
+                "unit": "rem"
+            },
+            "$description": "2rem (32px) in code.",
+            "$extensions": {
+                "com.figma": {
+                    "scopes": ["FONT_SIZE"],
+                    "codeSyntax": {
+                        "WEB": "var(--dma-font-size-32)"
+                    }
+                }
+            }
+        },
+        "48": {
+            "$value": {
+                "value": 3,
+                "unit": "rem"
+            },
+            "$description": "3rem (48px) in code.",
+            "$extensions": {
+                "com.figma": {
+                    "scopes": ["FONT_SIZE"],
+                    "codeSyntax": {
+                        "WEB": "var(--dma-font-size-48)"
+                    }
+                }
+            }
+        },
+        "$type": "dimension"
+    },
+    "line-height": {
+        "16": {
+            "$value": {
+                "value": 1,
+                "unit": "rem"
+            },
+            "$description": "1rem (16px) in code.",
+            "$extensions": {
+                "com.figma": {
+                    "scopes": ["LINE_HEIGHT"],
+                    "codeSyntax": {
+                        "WEB": "var(--dma-line-height-16)"
+                    }
+                }
+            }
+        },
+        "20": {
+            "$value": {
+                "value": 1.25,
+                "unit": "rem"
+            },
+            "$description": "1.25rem (20px) in code.",
+            "$extensions": {
+                "com.figma": {
+                    "scopes": ["LINE_HEIGHT"],
+                    "codeSyntax": {
+                        "WEB": "var(--dma-line-height-20)"
+                    }
+                }
+            }
+        },
+        "24": {
+            "$value": {
+                "value": 1.5,
+                "unit": "rem"
+            },
+            "$description": "1.5rem (24px) in code.",
+            "$extensions": {
+                "com.figma": {
+                    "scopes": ["LINE_HEIGHT"],
+                    "codeSyntax": {
+                        "WEB": "var(--dma-line-height-24)"
+                    }
+                }
+            }
+        },
+        "28": {
+            "$value": {
+                "value": 1.75,
+                "unit": "rem"
+            },
+            "$description": "1.75rem (28px) in code.",
+            "$extensions": {
+                "com.figma": {
+                    "scopes": ["LINE_HEIGHT"],
+                    "codeSyntax": {
+                        "WEB": "var(--dma-line-height-28)"
+                    }
+                }
+            }
+        },
+        "32": {
+            "$value": {
+                "value": 2,
+                "unit": "rem"
+            },
+            "$description": "2rem (32px) in code.",
+            "$extensions": {
+                "com.figma": {
+                    "scopes": ["LINE_HEIGHT"],
+                    "codeSyntax": {
+                        "WEB": "var(--dma-line-height-32)"
+                    }
+                }
+            }
+        },
+        "40": {
+            "$value": {
+                "value": 2.5,
+                "unit": "rem"
+            },
+            "$description": "2.5rem (40px) in code.",
+            "$extensions": {
+                "com.figma": {
+                    "scopes": ["LINE_HEIGHT"],
+                    "codeSyntax": {
+                        "WEB": "var(--dma-line-height-40)"
+                    }
+                }
+            }
+        },
+        "56": {
+            "$value": {
+                "value": 3.5,
+                "unit": "rem"
+            },
+            "$description": "3.5rem (56px) in code.",
+            "$extensions": {
+                "com.figma": {
+                    "scopes": ["LINE_HEIGHT"],
+                    "codeSyntax": {
+                        "WEB": "var(--dma-line-height-56)"
+                    }
+                }
+            }
+        },
+        "$type": "dimension"
+    },
+    "font-weight": {
+        "400": {
+            "$value": 400,
+            "$description": "400 in code, the Regular style in Figma.",
+            "$extensions": {
+                "com.figma": {
+                    "scopes": ["FONT_WEIGHT"],
+                    "codeSyntax": {
+                        "WEB": "var(--dma-font-weight-400)"
+                    }
+                }
+            }
+        },
+        "500": {
+            "$value": 500,
+            "$description": "500 in code, the Medium style in Figma.",
+            "$extensions": {
+                "com.figma": {
+                    "scopes": ["FONT_WEIGHT"],
+                    "codeSyntax": {
+                        "WEB": "var(--dma-font-weight-500)"
+                    }
+                }
+            }
+        },
+        "600": {
+            "$value": 600,
+            "$description": "600 in code, the Semi Bold style in Figma.",
+            "$extensions": {
+                "com.figma": {
+                    "scopes": ["FONT_WEIGHT"],
+                    "codeSyntax": {
+                        "WEB": "var(--dma-font-weight-600)"
+                    }
+                }
+            }
+        },
+        "700": {
+            "$value": 700,
+            "$description": "700 in code, the Bold style in Figma.",
+            "$extensions": {
+                "com.figma": {
+                    "scopes": ["FONT_WEIGHT"],
+                    "codeSyntax": {
+                        "WEB": "var(--dma-font-weight-700)"
+                    }
+                }
+            }
+        },
+        "$type": "fontWeight"
+    }
+}

@@ -4,6 +4,12 @@ Thank you for your interest in contributing to `@dnd-mapp/design-tokens`.
 
 This package publishes the design tokens of the D&D Mapp Figma library for all D&D Mapp apps. The variables in the `Design system` Figma file are the source of truth, and this repository turns them into CSS and JavaScript files.
 
+## Before you start
+
+Change a token in Figma first, and bring it here as described under [Updating the tokens](#updating-the-tokens). A token that only exists in code drifts away from the designs.
+
+Open an [issue](https://github.com/dnd-mapp/design-tokens/issues) to discuss any other change beyond a typo fix before you send a pull request. This avoids work on changes that do not fit the goals of the package.
+
 ## Development setup
 
 The required Node and pnpm versions are set in `devEngines` in `package.json`. They are enforced through `engineStrict`, so installing with other versions fails.
@@ -31,7 +37,98 @@ Install [actionlint](https://github.com/rhysd/actionlint) to lint the workflows 
 
 The pre-commit hooks only check files. Run `pnpm run format` to fix formatting issues, and `pnpm exec eslint --fix` to apply the fixes that ESLint can make. Stage the result.
 
+## Project layout
+
+The token files live in `tokens`. The build script lives in `src`, and most modules have a `.spec.ts` file next to them.
+
+| File               | Purpose                                                                             |
+|:-------------------|:------------------------------------------------------------------------------------|
+| `tokens`           | The DTCG token files, one for each Figma collection and mode                        |
+| `src/build.ts`     | The script behind the `build` script. It runs on import                             |
+| `src/constants.ts` | The directories, the CSS prefix, the modes, and the private collections             |
+| `src/tokens.ts`    | Collects the tokens of a token file                                                 |
+| `src/resolve.ts`   | Resolves aliases to the values that they refer to                                   |
+| `src/values.ts`    | Formats token values as CSS values                                                  |
+| `src/assemble.ts`  | Combines the files and modes into the tokens to publish, and checks them            |
+| `src/outputs.ts`   | Writes the stylesheet, and the module and its declarations                          |
+| `testing`          | The mocks of the file system and the console, and a small set of sample token files |
+
+Import other files with the `.ts` extension. Node.js runs the build script without a compile step, and `tsc` accepts the extension because `allowImportingTsExtensions` is on.
+
+## Token files
+
+The token files follow the [DTCG format](https://www.designtokens.org/tr/2025.10/format/). Each Figma collection has its own file, named `<collection>.tokens.json`. A collection with modes has a file for each mode, named `<collection>.<mode>.tokens.json`.
+
+| File                      | Figma collection    | Published |
+|:--------------------------|:--------------------|:----------|
+| `primitives.tokens.json`  | `Primitives`        | No        |
+| `color.light.tokens.json` | `Color`, Light mode | Yes       |
+| `color.dark.tokens.json`  | `Color`, Dark mode  | Yes       |
+| `spacing.tokens.json`     | `Spacing`           | Yes       |
+| `typography.tokens.json`  | `Typography`        | Yes       |
+| `radius.tokens.json`      | `Radius`            | Yes       |
+
+Each `/` in a variable name starts a nested group, so `color/text/default` becomes the `default` token in the `text` group of the `color` group. Set `$type` on the top-level group, and every token in it inherits it. Keep the order of the variables in Figma.
+
+| `$type`      | Figma variables                               | `$value` example                                                      |
+|:-------------|:----------------------------------------------|:----------------------------------------------------------------------|
+| `color`      | Colors                                        | `{ "colorSpace": "srgb", "components": [1, 1, 1], "hex": "#ffffff" }` |
+| `dimension`  | Spacing, font sizes, line heights, and radius | `{ "value": 1, "unit": "rem" }`                                       |
+| `fontFamily` | Font families                                 | `["Inter", "system-ui", "sans-serif"]`                                |
+| `fontWeight` | Font weights                                  | `600`                                                                 |
+| `number`     | Other numbers                                 | `1.5`                                                                 |
+
+Follow these rules when you write a token file:
+
+- Write the value that code uses. Take the rem value and the font stack from the description of the variable, for example "1rem (16px) in code.". `radius/full` stays `9999px`.
+- Write a variable that points at another variable as an alias, such as `"{neutral.900}"`. Never copy the value.
+- Write color components between 0 and 1. The `hex` is optional, and the build checks that it matches the components.
+- Copy the description of the variable into `$description`. Editors show it on hover.
+- Copy the WEB code syntax and the scopes of the variable into `$extensions`, under `com.figma`. The build checks the code syntax against the name of the custom property.
+
+```json
+{
+    "color": {
+        "$type": "color",
+        "text": {
+            "default": {
+                "$value": "{neutral.900}",
+                "$description": "Body text and icons.",
+                "$extensions": {
+                    "com.figma": {
+                        "codeSyntax": { "WEB": "var(--dma-color-text-default)" },
+                        "scopes": ["TEXT_FILL", "SHAPE_FILL"]
+                    }
+                }
+            }
+        }
+    }
+}
+```
+
+The build publishes every token except those in `primitives.tokens.json`. It resolves the aliases to primitives into plain values, so the primitives never reach the package. The files of each mode must define the same tokens.
+
+JavaScript puts object keys that are whole numbers first, in ascending order. So the steps of a scale, such as `spacing/8` and `spacing/16`, come out in ascending order, whatever their order in the file.
+
+## Updating the tokens
+
+1. Publish the `Design system` library in Figma.
+2. Export the variables of every collection and mode from the `Design system` file.
+3. Convert the export into the token files, following the rules under [Token files](#token-files).
+4. Run `pnpm run build`, and check `dist/tokens.css` for the changes that you expect.
+5. Record the changes in `CHANGELOG.md`, and open a pull request.
+
 ## Building and testing
+
+The `build` script reads the token files and writes the outputs to `dist`: `tokens.css`, `index.js`, and `index.d.ts`. The `prepublishOnly` script runs the build, and then `prepare-dist` from `@dnd-mapp/package-builder` adds the manifest and the docs.
+
+The build stops with an error, and writes nothing, when a token file breaks a rule. It checks these things:
+
+- The names of the files, groups, and tokens.
+- The type and the shape of every value.
+- That every alias refers to an existing token of the same type, without a cycle.
+- That every mode defines the same tokens, and that only colors differ between the modes.
+- That the WEB code syntax matches the name of the custom property.
 
 Tests use Vitest. They replace `node:fs/promises` and the console with the mocks in `testing`, so no test touches the real file system. Coverage must stay above the thresholds in `vitest.config.ts`.
 
@@ -53,6 +150,8 @@ The `lint-md` script lints the Markdown files with markdownlint, and the `lint-t
 ## Changelog and versioning
 
 This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html). Record every notable change for consumers under `[Unreleased]` in `CHANGELOG.md`, using the [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) format.
+
+The names of the custom properties, the keys of the `tokens` and `values` objects, and the exported files are the public API.
 
 | Change                                                         | Version bump |
 |:---------------------------------------------------------------|:-------------|

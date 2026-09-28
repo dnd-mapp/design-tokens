@@ -6,4 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+### Added
+
+- The 59 semantic tokens of the `Design system` Figma library: 22 colors, 10 spacing steps, 20 typography tokens, and 7 radius steps.
+- `tokens.css`, available as `@dnd-mapp/design-tokens/tokens.css`. It declares every token as a custom property on `:root`, with a `--dma-` prefix.
+- `light-dark()` values for the color tokens that differ between Light and Dark mode, with `color-scheme: light dark` on `:root`.
+- The `tokens` object from the package root, with a `var()` reference for every token, and its type declarations.
+- The `values` object from the package root, with the CSS value of every token. A color has a `light` and a `dark` value.
+
 [Unreleased]: https://github.com/dnd-mapp/design-tokens/commits/main

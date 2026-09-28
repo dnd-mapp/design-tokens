@@ -1,7 +1,7 @@
 {
   "$schema": "https://www.schemastore.org/package.json",
   "name": "@dnd-mapp/design-tokens",
-  "description": "The D&D Mapp design tokens from the Figma library.",
+  "description": "The D&D Mapp design tokens from the Figma library, as CSS custom properties and typed constants.",
   "version": "0.0.0",
   "license": "MIT",
   "type": "module",
@@ -9,6 +9,8 @@
   "keywords": [
     "design-tokens",
     "design-system",
+    "css",
+    "css-custom-properties",
     "figma",
     "dnd-mapp"
   ],
@@ -24,7 +26,19 @@
     "access": "public",
     "directory": "dist"
   },
+  "sideEffects": [
+    "*.css"
+  ],
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./index.js"
+    },
+    "./tokens.css": "./tokens.css"
+  },
   "scripts": {
+    "prepublishOnly": "pnpm build && prepare-dist",
+    "build": "node src/build.ts",
     "test": "vitest --ui",
     "test-ci": "vitest run",
     "typecheck": "tsc -p tsconfig.json",
