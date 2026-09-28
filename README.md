@@ -4,7 +4,7 @@
 [![npm version](https://img.shields.io/npm/v/@dnd-mapp/design-tokens)](https://www.npmjs.com/package/@dnd-mapp/design-tokens)
 [![license](https://img.shields.io/npm/l/@dnd-mapp/design-tokens)](LICENSE)
 
-The design tokens of the D&D Mapp Figma library, as CSS custom properties and typed constants.
+The design tokens of the D&D Mapp Figma library, as CSS custom properties, typed constants, and a Sass module.
 
 The tokens come from the variables in the `Design system` Figma file. Every token has the name of its WEB code syntax in Figma, so Dev Mode and code use the same names. For example, `color/text/default` becomes `--dma-color-text-default`.
 
@@ -76,6 +76,41 @@ context.font = `${values['font-weight'][600]} 16px ${values['font-family'].sans}
 ```
 
 A color has a value for each mode, `light` and `dark`, even when the modes share it. Every other token has a single value. The values don't follow `color-scheme`, so pick the mode yourself. Spacing, radius, and font sizes are in rem, like in the stylesheet.
+
+### Sass
+
+The package has a Sass module that emits no CSS, so you can load it with `@use` from any stylesheet. Its `sass` export condition lets the [Node.js package importer](https://sass-lang.com/documentation/js-api/classes/nodepackageimporter/) find it through a `pkg:` URL.
+
+```scss
+@use 'sass:map';
+@use 'pkg:@dnd-mapp/design-tokens' as dma;
+
+.card {
+    padding: dma.$spacing-16;
+    color: dma.$color-text-default;
+}
+```
+
+Without the importer, add `node_modules` to the load paths of Sass, and use `@use '@dnd-mapp/design-tokens' as dma`.
+
+Every token has a variable with its `var()` reference, named after its path without the prefix. The variables need the stylesheet, so load it as well. The module also has two maps, grouped like the `tokens` object:
+
+- `$tokens` holds the `var()` references. Loop over it to generate classes, for example.
+- `$values` holds the values as Sass values, so Sass math and color functions work on them. A color holds a map with a `'light'` and a `'dark'` value.
+
+```scss
+@each $step, $reference in map.get(dma.$tokens, 'spacing') {
+    .gap-#{$step} {
+        gap: $reference;
+    }
+}
+
+.icon {
+    width: map.get(dma.$values, 'spacing', 16) * 1.5;
+}
+```
+
+A step that is a whole number, such as `16`, is a number key in the maps. Every other name, such as `'full'`, is a string key.
 
 ## Tokens
 

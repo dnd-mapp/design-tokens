@@ -5,7 +5,7 @@ import { fsMock } from '../testing/fs-promises.ts';
 import { tokenFiles } from '../testing/token-files.ts';
 import { assembleTokens } from './assemble.ts';
 import { distDir, tokensDir } from './constants.ts';
-import { createCss, createDts, createJs } from './outputs.ts';
+import { createCss, createDts, createJs, createScss } from './outputs.ts';
 
 let runs = 0;
 
@@ -45,11 +45,12 @@ describe('build', () => {
             { operation: 'writeFile', path: join(distDir, 'tokens.css'), data: createCss(tokens) },
             { operation: 'writeFile', path: join(distDir, 'index.js'), data: createJs(tokens) },
             { operation: 'writeFile', path: join(distDir, 'index.d.ts'), data: createDts(tokens) },
+            { operation: 'writeFile', path: join(distDir, 'index.scss'), data: createScss(tokens) },
         ]);
         expect(consoleMock.entriesOf('log').map((entry) => entry.message)).toEqual([
             'Read 4 token files',
             'Assembled 3 tokens',
-            'Wrote "tokens.css", "index.js", "index.d.ts" to "dist"',
+            'Wrote "tokens.css", "index.js", "index.d.ts", "index.scss" to "dist"',
         ]);
     });
 

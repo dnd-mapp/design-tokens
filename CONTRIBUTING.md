@@ -2,7 +2,7 @@
 
 Thank you for your interest in contributing to `@dnd-mapp/design-tokens`.
 
-This package publishes the design tokens of the D&D Mapp Figma library for all D&D Mapp apps. The variables in the `Design system` Figma file are the source of truth, and this repository turns them into CSS and JavaScript files.
+This package publishes the design tokens of the D&D Mapp Figma library for all D&D Mapp apps. The variables in the `Design system` Figma file are the source of truth, and this repository turns them into CSS, JavaScript, and Sass files.
 
 ## Before you start
 
@@ -50,7 +50,7 @@ The token files live in `tokens`. The build script lives in `src`, and most modu
 | `src/resolve.ts`   | Resolves aliases to the values that they refer to                                   |
 | `src/values.ts`    | Formats token values as CSS values                                                  |
 | `src/assemble.ts`  | Combines the files and modes into the tokens to publish, and checks them            |
-| `src/outputs.ts`   | Writes the stylesheet, and the module and its declarations                          |
+| `src/outputs.ts`   | Writes the stylesheet, the module and its declarations, and Sass                    |
 | `testing`          | The mocks of the file system and the console, and a small set of sample token files |
 
 Import other files with the `.ts` extension. Node.js runs the build script without a compile step, and `tsc` accepts the extension because `allowImportingTsExtensions` is on.
@@ -120,7 +120,7 @@ JavaScript puts object keys that are whole numbers first, in ascending order. So
 
 ## Building and testing
 
-The `build` script reads the token files and writes the outputs to `dist`: `tokens.css`, `index.js`, and `index.d.ts`. The `prepublishOnly` script runs the build, and then `prepare-dist` from `@dnd-mapp/package-builder` adds the manifest and the docs.
+The `build` script reads the token files and writes the outputs to `dist`: `tokens.css`, `index.js`, `index.d.ts`, and `index.scss`. The `prepublishOnly` script runs the build, and then `prepare-dist` from `@dnd-mapp/package-builder` adds the manifest and the docs.
 
 The build stops with an error, and writes nothing, when a token file breaks a rule. It checks these things:
 
@@ -130,7 +130,7 @@ The build stops with an error, and writes nothing, when a token file breaks a ru
 - That every mode defines the same tokens, and that only colors differ between the modes.
 - That the WEB code syntax matches the name of the custom property.
 
-Tests use Vitest. They replace `node:fs/promises` and the console with the mocks in `testing`, so no test touches the real file system. Coverage must stay above the thresholds in `vitest.config.ts`.
+Tests use Vitest. They replace `node:fs/promises` and the console with the mocks in `testing`, so no test touches the real file system. The tests of the Sass module compile it with Sass, to check that stylesheets can use it. Coverage must stay above the thresholds in `vitest.config.ts`.
 
 Check and format the repository with these commands. CI runs `format-check`, `lint-md`, `lint-ts`, `typecheck`, `test-ci`, `build`, and actionlint. Run them yourself before you open a pull request.
 
@@ -151,7 +151,7 @@ The `lint-md` script lints the Markdown files with markdownlint, and the `lint-t
 
 This project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html). Record every notable change for consumers under `[Unreleased]` in `CHANGELOG.md`, using the [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) format.
 
-The names of the custom properties, the keys of the `tokens` and `values` objects, and the exported files are the public API.
+The names of the custom properties, the keys of the `tokens` and `values` objects, the names of the Sass variables and map keys, and the exported files are the public API.
 
 | Change                                                         | Version bump |
 |:---------------------------------------------------------------|:-------------|

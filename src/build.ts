@@ -2,13 +2,14 @@
  * Builds the package from the DTCG token files.
  *
  * Reads every token file in `tokens`, resolves the aliases, and writes the outputs to `dist`: the stylesheet, the
- * module and its declarations. It runs from the `build` script, and `prepare-dist` completes `dist` afterwards.
+ * module and its declarations, and the Sass module. It runs from the `build` script, and `prepare-dist` completes
+ * `dist` afterwards.
  */
 import { mkdir, readdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { join, relative } from 'node:path';
 import { assembleTokens, type TokenFile } from './assemble.ts';
 import { distDir, rootDir, TOKEN_FILE_EXTENSION, tokensDir } from './constants.ts';
-import { createCss, createDts, createJs } from './outputs.ts';
+import { createCss, createDts, createJs, createScss } from './outputs.ts';
 
 async function readTokenFiles(): Promise<TokenFile[]> {
     const names = (await readdir(tokensDir)).filter((name) => name.endsWith(TOKEN_FILE_EXTENSION)).sort();
@@ -40,6 +41,7 @@ async function build(): Promise<void> {
         ['tokens.css', createCss(tokens)],
         ['index.js', createJs(tokens)],
         ['index.d.ts', createDts(tokens)],
+        ['index.scss', createScss(tokens)],
     ];
 
     await rm(distDir, { recursive: true, force: true });

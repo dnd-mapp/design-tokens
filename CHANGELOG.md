@@ -13,5 +13,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - `light-dark()` values for the color tokens that differ between Light and Dark mode, with `color-scheme: light dark` on `:root`.
 - The `tokens` object from the package root, with a `var()` reference for every token, and its type declarations.
 - The `values` object from the package root, with the CSS value of every token. A color has a `light` and a `dark` value.
+- A Sass module, found through the `sass` export condition, or as `@dnd-mapp/design-tokens/index.scss`. It has a variable with the `var()` reference of every token, and the `$tokens` and `$values` maps.
 
 [Unreleased]: https://github.com/dnd-mapp/design-tokens/commits/main

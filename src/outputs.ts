@@ -167,3 +167,52 @@ export function createDts(tokens: OutputToken[]): string {
         '',
     ].join('\n');
 }
+
+/** Keeps a whole number as a number key, so `map.get($tokens, 'spacing', 16)` finds it, and quotes any other key. */
+function formatScssKey(name: string): string {
+    return /^\d+$/.test(name) ? name : quote(name);
+}
+
+function scssVariable(token: OutputToken): string {
+    return `$${token.path.join('-')}`;
+}
+
+function formatScssValue(token: OutputToken): string {
+    if (token.type === 'color') {
+        return `(${MODES.map((mode) => `${quote(mode)}: ${token.modeValues[mode]}`).join(', ')})`;
+    }
+    // A font stack is a comma-separated list, so it needs parentheses inside a map.
+    return token.type === 'fontFamily' ? `(${token.value})` : token.value;
+}
+
+/**
+ * Creates the Sass module. It declares a variable with the `var()` reference of every token, the `$tokens` map of
+ * those references, and the `$values` map with the value of every token as a Sass value.
+ *
+ * The module emits no CSS, so it can be loaded with `@use` from any number of stylesheets.
+ */
+export function createScss(tokens: OutputToken[]): string {
+    const variables = tokens.flatMap((token, index) => [
+        ...(token.path[0] === tokens[index - 1]?.path[0] ? [] : ['']),
+        ...formatDoc('///', token, token.value),
+        `${scssVariable(token)}: var(${token.name});`,
+    ]);
+    const map = (token: (key: string, token: OutputToken) => string[]): string[] =>
+        formatMembers(tokens, { key: formatScssKey, openGroup: (key) => `${key}: (`, closeGroup: '),', token });
+
+    return [
+        `// ${NOTICE}`,
+        ...variables,
+        '',
+        '/// The `var()` reference of every token, in the groups of the `tokens` object.',
+        '$tokens: (',
+        ...map((key, token) => [`${key}: ${scssVariable(token)},`]),
+        ');',
+        '',
+        '/// The value of every token. A color has a value for each mode.',
+        '$values: (',
+        ...map((key, token) => [`${key}: ${formatScssValue(token)},`]),
+        ');',
+        '',
+    ].join('\n');
+}
