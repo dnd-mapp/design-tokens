@@ -4,7 +4,7 @@
 [![npm version](https://img.shields.io/npm/v/@dnd-mapp/design-tokens)](https://www.npmjs.com/package/@dnd-mapp/design-tokens)
 [![license](https://img.shields.io/npm/l/@dnd-mapp/design-tokens)](LICENSE)
 
-The design tokens of the D&D Mapp Figma library, as CSS custom properties, typed constants, and a Sass module.
+The design tokens of the D&D Mapp Figma library, as CSS custom properties, typed constants, a Sass module, and DTCG token files.
 
 The tokens come from the variables in the `Design system` Figma file. Every token has the name of its WEB code syntax in Figma, so Dev Mode and code use the same names. For example, `color/text/default` becomes `--dma-color-text-default`.
 
@@ -111,6 +111,16 @@ Every token has a variable with its `var()` reference, named after its path with
 ```
 
 A step that is a whole number, such as `16`, is a number key in the maps. Every other name, such as `'full'`, is a string key.
+
+### DTCG token files
+
+The package includes the tokens as [DTCG](https://www.designtokens.org/tr/2025.10/format/) token files, one for each mode: `light.tokens.json` and `dark.tokens.json`. Use them in tools that read DTCG, such as token viewers and documentation sites.
+
+```ts
+import light from '@dnd-mapp/design-tokens/light.tokens.json' with { type: 'json' };
+```
+
+The aliases are resolved, and every token has its own `$type`, so each file stands on its own. The tokens keep their description, and the metadata of their Figma variable in `$extensions`.
 
 ## Tokens
 

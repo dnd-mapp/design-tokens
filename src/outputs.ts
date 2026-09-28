@@ -216,3 +216,27 @@ export function createScss(tokens: OutputToken[]): string {
         '',
     ].join('\n');
 }
+
+/**
+ * Creates a DTCG token file with the tokens of a mode. The aliases are resolved, and every token has its own `$type`,
+ * so the file stands on its own.
+ */
+export function createTokensJson(tokens: OutputToken[], mode: Mode): string {
+    const root: Record<string, unknown> = {};
+
+    for (const token of tokens) {
+        let node = root;
+
+        for (const group of token.path.slice(0, -1)) {
+            node = (node[group] ??= {}) as Record<string, unknown>;
+        }
+        node[token.path.at(-1)!] = {
+            $type: token.type,
+            $value: token.resolvedValues[mode],
+            $description: token.description,
+            $extensions: token.extensions,
+        };
+    }
+    // `JSON.stringify` leaves out the members that are `undefined`, such as a missing description.
+    return `${JSON.stringify(root, null, 4)}\n`;
+}

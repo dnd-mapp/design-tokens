@@ -2,7 +2,7 @@
 
 Thank you for your interest in contributing to `@dnd-mapp/design-tokens`.
 
-This package publishes the design tokens of the D&D Mapp Figma library for all D&D Mapp apps. The variables in the `Design system` Figma file are the source of truth, and this repository turns them into CSS, JavaScript, and Sass files.
+This package publishes the design tokens of the D&D Mapp Figma library for all D&D Mapp apps. The variables in the `Design system` Figma file are the source of truth, and this repository turns them into CSS, JavaScript, Sass, and DTCG files.
 
 ## Before you start
 
@@ -50,7 +50,7 @@ The token files live in `tokens`. The build script lives in `src`, and most modu
 | `src/resolve.ts`   | Resolves aliases to the values that they refer to                                   |
 | `src/values.ts`    | Formats token values as CSS values                                                  |
 | `src/assemble.ts`  | Combines the files and modes into the tokens to publish, and checks them            |
-| `src/outputs.ts`   | Writes the stylesheet, the module and its declarations, and Sass                    |
+| `src/outputs.ts`   | Writes the stylesheet, the module and its declarations, Sass, and DTCG token files  |
 | `testing`          | The mocks of the file system and the console, and a small set of sample token files |
 
 Import other files with the `.ts` extension. Node.js runs the build script without a compile step, and `tsc` accepts the extension because `allowImportingTsExtensions` is on.
@@ -120,7 +120,7 @@ JavaScript puts object keys that are whole numbers first, in ascending order. So
 
 ## Building and testing
 
-The `build` script reads the token files and writes the outputs to `dist`: `tokens.css`, `index.js`, `index.d.ts`, and `index.scss`. The `prepublishOnly` script runs the build, and then `prepare-dist` from `@dnd-mapp/package-builder` adds the manifest and the docs.
+The `build` script reads the token files and writes the outputs to `dist`: `tokens.css`, `index.js`, `index.d.ts`, `index.scss`, and a DTCG token file for each mode, such as `light.tokens.json`. The `prepublishOnly` script runs the build, and then `prepare-dist` from `@dnd-mapp/package-builder` adds the manifest and the docs.
 
 The build stops with an error, and writes nothing, when a token file breaks a rule. It checks these things:
 
