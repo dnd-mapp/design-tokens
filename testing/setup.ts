@@ -1,4 +1,3 @@
-import { beforeEach, vi } from 'vitest';
 import { consoleMock } from './console.ts';
 import { fsMock } from './fs-promises.ts';
 

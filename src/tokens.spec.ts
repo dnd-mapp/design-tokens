@@ -1,4 +1,3 @@
-import { describe, expect, it } from 'vitest';
 import { collectTokens, formatPath } from './tokens.ts';
 
 describe('collectTokens', () => {

@@ -1,5 +1,4 @@
 import { format } from 'node:util';
-import { vi } from 'vitest';
 
 /** The severities of the console methods that the code under test writes to. */
 export type Severity = 'error' | 'log' | 'warn';

@@ -1,5 +1,4 @@
 import { basename, join } from 'node:path';
-import { beforeEach, describe, expect, it } from 'vitest';
 import { consoleMock } from '../testing/console.ts';
 import { fsMock } from '../testing/fs-promises.ts';
 import { tokenFiles } from '../testing/token-files.ts';

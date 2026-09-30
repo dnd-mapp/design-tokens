@@ -1,4 +1,3 @@
-import { describe, expect, it } from 'vitest';
 import type { TokenType } from './tokens.ts';
 import { formatValue, toOklchColor, typographyMemberType } from './values.ts';
 

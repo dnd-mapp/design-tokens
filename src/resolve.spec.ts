@@ -1,4 +1,3 @@
-import { describe, expect, it } from 'vitest';
 import { aliasTarget, resolveTokens } from './resolve.ts';
 import type { Token, TokenType } from './tokens.ts';
 

@@ -1,5 +1,4 @@
 import { compileString } from 'sass';
-import { describe, expect, it } from 'vitest';
 import type { OutputToken } from './assemble.ts';
 import { createCss, createDts, createJs, createScss, createTokensJson } from './outputs.ts';
 

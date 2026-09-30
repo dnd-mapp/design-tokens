@@ -50,7 +50,7 @@
     "build": "node src/build.ts",
     "test": "vitest --ui",
     "test-ci": "vitest run",
-    "typecheck": "tsc -p tsconfig.json",
+    "typecheck": "tsc -b",
     "lint-ts": "eslint",
     "lint-md": "markdownlint-cli2",
     "format": "prettier -w .",

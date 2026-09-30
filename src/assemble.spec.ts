@@ -1,4 +1,3 @@
-import { describe, expect, it } from 'vitest';
 import { oklch, tokenFiles } from '../testing/token-files.ts';
 import { assembleTokens, type OutputToken, type TokenFile } from './assemble.ts';
 
