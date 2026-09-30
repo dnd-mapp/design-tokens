@@ -15,10 +15,12 @@ function typography(members: object = {}) {
 
 describe('formatValue', () => {
     it.each<[TokenType, unknown, string]>([
-        ['color', { colorSpace: 'srgb', components: [1, 0.5, 0] }, '#ff8000'],
-        ['color', { colorSpace: 'srgb', components: [1, 1, 1], hex: '#FFFFFF' }, '#ffffff'],
-        ['color', { colorSpace: 'srgb', components: [0, 0, 0], alpha: 0.5 }, '#00000080'],
-        ['color', { colorSpace: 'srgb', components: [0, 0, 0], alpha: 1 }, '#000000'],
+        ['color', { colorSpace: 'srgb', components: [1, 0.5, 0] }, 'oklch(0.7311 0.18611 52.78)'],
+        ['color', { colorSpace: 'srgb', components: [1, 1, 1], hex: '#FFFFFF' }, 'oklch(1 0 0)'],
+        ['color', { colorSpace: 'srgb', components: [0.5, 0.5, 0.5] }, 'oklch(0.5982 0 0)'],
+        ['color', { colorSpace: 'srgb', components: [0, 0, 0], alpha: 0.5 }, 'oklch(0 0 0 / 0.5)'],
+        ['color', { colorSpace: 'srgb', components: [0, 0, 0], alpha: 0.30000001192092896 }, 'oklch(0 0 0 / 0.3)'],
+        ['color', { colorSpace: 'srgb', components: [0, 0, 0], alpha: 1 }, 'oklch(0 0 0)'],
         ['dimension', { value: 1.5, unit: 'rem' }, '1.5rem'],
         ['dimension', { value: 9999, unit: 'px' }, '9999px'],
         ['dimension', { value: 0, unit: 'rem' }, '0'],

@@ -29,7 +29,41 @@ function toHexByte(channel: number): string {
         .padStart(2, '0');
 }
 
-/** Formats a DTCG sRGB color as a hex color, with an alpha byte when it is not opaque. */
+/** Rounds a number to a number of decimals, and drops the trailing zeros. */
+function round(value: number, decimals: number): number {
+    return Number(value.toFixed(decimals));
+}
+
+function toLinear(channel: number): number {
+    return channel <= 0.04045 ? channel / 12.92 : ((channel + 0.055) / 1.055) ** 2.4;
+}
+
+/**
+ * Converts sRGB components to OKLCH, with the matrices of the OKLab reference implementation.
+ *
+ * @see https://bottosson.github.io/posts/oklab/
+ */
+function toOklch(components: number[]): [lightness: number, chroma: number, hue: number] {
+    const [red, green, blue] = components.map(toLinear) as [number, number, number];
+    const l = Math.cbrt(0.4122214708 * red + 0.5363325363 * green + 0.0514459929 * blue);
+    const m = Math.cbrt(0.2119034982 * red + 0.6806995451 * green + 0.1073969566 * blue);
+    const s = Math.cbrt(0.0883024619 * red + 0.2817188376 * green + 0.6299787005 * blue);
+    const a = 1.9779984951 * l - 2.428592205 * m + 0.4505937099 * s;
+    const b = 0.0259040371 * l + 0.7827717662 * m - 0.808675766 * s;
+
+    return [
+        0.2104542553 * l + 0.793617785 * m - 0.0040720468 * s,
+        Math.hypot(a, b),
+        (Math.atan2(b, a) * 180) / Math.PI,
+    ];
+}
+
+/**
+ * Formats a DTCG sRGB color as an `oklch()` color, with an alpha when it is not opaque.
+ *
+ * The precision keeps every 8-bit sRGB color the same when a browser converts it back. A gray has no chroma, so its
+ * hue is 0 rather than the noise of the conversion.
+ */
 function formatColor(value: unknown): string {
     if (!isObject(value) || value['colorSpace'] !== 'srgb') {
         throw new Error('a color must be an object with the "srgb" color space');
@@ -48,7 +82,12 @@ function formatColor(value: unknown): string {
     if (hex !== undefined && (typeof hex !== 'string' || hex.toLowerCase() !== rgb)) {
         throw new Error(`the hex ${JSON.stringify(hex)} does not match the components, which are ${rgb}`);
     }
-    return alpha < 1 ? `${rgb}${toHexByte(alpha)}` : rgb;
+    const [lightness, chroma, hue] = toOklch(components);
+    const c = round(chroma, 5);
+    const h = c === 0 ? 0 : round((hue + 360) % 360, 2) % 360;
+    const oklch = `${round(lightness, 4)} ${c} ${h}`;
+
+    return alpha < 1 ? `oklch(${oklch} / ${round(alpha, 4)})` : `oklch(${oklch})`;
 }
 
 function formatDimension(value: unknown): string {

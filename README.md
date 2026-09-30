@@ -35,7 +35,7 @@ The stylesheet declares every token on `:root`. Spacing, radius, and font sizes 
 
 ### Light and dark mode
 
-A color token that differs between the modes gets a [`light-dark()`](https://developer.mozilla.org/docs/Web/CSS/color_value/light-dark) value. The browser picks the value from the `color-scheme` of the element that uses the token.
+Every color is an [`oklch()`](https://developer.mozilla.org/docs/Web/CSS/color_value/oklch) color, converted from the sRGB color of the Figma variable. The conversion keeps enough precision that each color stays the same sRGB color. A color token that differs between the modes gets a [`light-dark()`](https://developer.mozilla.org/docs/Web/CSS/color_value/light-dark) value. The browser picks the value from the `color-scheme` of the element that uses the token.
 
 The stylesheet sets `color-scheme: light dark` on `:root`, so the colors follow the system setting. Set `color-scheme` to force a mode, for the whole page or for part of it.
 
@@ -131,7 +131,7 @@ import { values } from '@dnd-mapp/design-tokens';
 
 const mode = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
 
-context.fillStyle = values.color.background.accent[mode]; // "#971318" or "#feaa98"
+context.fillStyle = values.color.background.accent[mode]; // "oklch(0.4343 0.16468 26.31)" or "oklch(0.8155 0.10309 32.64)"
 context.font = values.text.body.medium.font; // '400 1rem/1.5rem Inter, system-ui, sans-serif'
 ```
 
@@ -190,7 +190,7 @@ The package publishes the semantic colors, spacing, typography, and radius token
 
 | Group         | Example                       | Value                                         |
 |:--------------|:------------------------------|:----------------------------------------------|
-| `color`       | `--dma-color-text-default`    | A hex color, or `light-dark()` of two         |
+| `color`       | `--dma-color-text-default`    | An `oklch()` color, or `light-dark()` of two  |
 | `spacing`     | `--dma-spacing-16`            | `1rem`                                        |
 | `font-family` | `--dma-font-family-sans`      | A font stack, such as `Inter, system-ui`      |
 | `font-size`   | `--dma-font-size-16`          | `1rem`                                        |
