@@ -2,7 +2,7 @@
   "$schema": "https://www.schemastore.org/package.json",
   "name": "@dnd-mapp/design-tokens",
   "description": "The D&D Mapp design tokens from the Figma library, as CSS custom properties, typed constants, Sass, and DTCG JSON, with the Inter and JetBrains Mono fonts.",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "license": "MIT",
   "type": "module",
   "author": "D&D Mapp",
