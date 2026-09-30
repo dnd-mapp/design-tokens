@@ -3,6 +3,8 @@
         "esbenp.prettier-vscode",
         "editorconfig.editorconfig",
         "davidanson.vscode-markdownlint",
-        "dbaeumer.vscode-eslint"
+        "dbaeumer.vscode-eslint",
+        "vitest.explorer",
+        "github.vscode-github-actions"
     ]
 }
