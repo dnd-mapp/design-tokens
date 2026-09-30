@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { srgb, tokenFiles } from '../testing/token-files.ts';
+import { oklch, tokenFiles } from '../testing/token-files.ts';
 import { assembleTokens, type OutputToken, type TokenFile } from './assemble.ts';
 
 function colorFile(name: string, color: object): TokenFile {
@@ -18,7 +18,7 @@ describe('assembleTokens', () => {
                 name: '--dma-color-text-default',
                 value: 'light-dark(oklch(0 0 0), oklch(1 0 0))',
                 modeValues: { light: 'oklch(0 0 0)', dark: 'oklch(1 0 0)' },
-                resolvedValues: { light: srgb('#000000', [0, 0, 0]), dark: srgb('#ffffff', [1, 1, 1]) },
+                resolvedValues: { light: oklch('#000000', [0, 0, 0]), dark: oklch('#ffffff', [1, 0, 0]) },
                 description: undefined,
                 extensions: { 'com.figma': { codeSyntax: { WEB: 'var(--dma-color-text-default)' } } },
             },
@@ -28,7 +28,10 @@ describe('assembleTokens', () => {
                 name: '--dma-color-border-focus',
                 value: 'oklch(0.7311 0.18611 52.78)',
                 modeValues: { light: 'oklch(0.7311 0.18611 52.78)', dark: 'oklch(0.7311 0.18611 52.78)' },
-                resolvedValues: { light: srgb('#ff8000', [1, 0.5, 0]), dark: srgb('#ff8000', [1, 0.5, 0]) },
+                resolvedValues: {
+                    light: oklch('#ff8000', [0.7311, 0.18611, 52.78]),
+                    dark: oklch('#ff8000', [0.7311, 0.18611, 52.78]),
+                },
                 description: undefined,
                 extensions: undefined,
             },
@@ -55,7 +58,7 @@ describe('assembleTokens', () => {
                 name: '--dma-color-text',
                 value: 'oklch(1 0 0)',
                 modeValues: { light: 'oklch(1 0 0)', dark: 'oklch(1 0 0)' },
-                resolvedValues: { light: white.$value, dark: white.$value },
+                resolvedValues: { light: oklch('#ffffff', [1, 0, 0]), dark: oklch('#ffffff', [1, 0, 0]) },
                 description: undefined,
                 extensions: undefined,
             },

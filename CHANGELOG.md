@@ -15,7 +15,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - The `tokens` object from the package root, with a `var()` reference for every token, and its type declarations.
 - The `values` object from the package root, with the CSS value of every token. A color has a `light` and a `dark` value.
 - A Sass module, found through the `sass` export condition, or as `@dnd-mapp/design-tokens/index.scss`. It has a variable with the `var()` reference of every token, and the `$tokens` and `$values` maps.
-- The DTCG token files `light.tokens.json` and `dark.tokens.json`, with the aliases resolved.
+- The DTCG token files `light.tokens.json` and `dark.tokens.json`, with the aliases resolved, and the colors in the `oklch` color space with an sRGB `hex` fallback.
 - A group of tokens for each of the 11 text styles of the `Design system` Figma library, such as `Body/Medium`. The `font-family`, `font-size`, `font-weight`, `line-height`, and `letter-spacing` tokens of a style refer to the typography tokens.
 - A `font` token for each text style, such as `--dma-text-body-medium-font`, with a CSS `font` shorthand composed from the tokens of the style. The DTCG token files hold it as a `typography` token.
 - `fonts.css`, available as `@dnd-mapp/design-tokens/fonts.css`. It declares the variable Inter and JetBrains Mono fonts, upright and italic, with a `@font-face` rule for each subset and style. The package includes the font files and their SIL Open Font License 1.1.

@@ -9,7 +9,7 @@ import {
     TYPOGRAPHY_MEMBERS,
     type TypographyMember,
 } from './tokens.ts';
-import { formatValue, typographyMemberType } from './values.ts';
+import { formatValue, toOklchColor, typographyMemberType } from './values.ts';
 
 /** A token file and its parsed content. */
 export interface TokenFile {
@@ -26,9 +26,9 @@ export interface OutputToken {
     name: string;
     /** The CSS value. A token that differs between the modes gets a `light-dark()` value. */
     value: string;
-    /** The CSS value in each mode, for example `#f8f9fb`. */
+    /** The CSS value in each mode, for example `oklch(0.9819 0.00286 264.04)`. */
     modeValues: Record<Mode, string>;
-    /** The `$value` in each mode, with the aliases resolved, for example a DTCG color. */
+    /** The DTCG `$value` in each mode, with the aliases resolved. A color is in the OKLCH color space. */
     resolvedValues: Record<Mode, unknown>;
     description: string | undefined;
     extensions: Record<string, unknown> | undefined;
@@ -106,7 +106,8 @@ function createOutputToken(source: Token, path: string[], type: TokenType, resol
         name: cssName(path),
         value: distinct.length > 1 ? `light-dark(${values.join(', ')})` : distinct[0]!,
         modeValues: byMode(values),
-        resolvedValues: byMode(resolvedValues),
+        // The values are valid once they are formatted, so a color converts without an error.
+        resolvedValues: byMode(type === 'color' ? resolvedValues.map(toOklchColor) : resolvedValues),
         description: source.description,
         extensions: source.extensions,
     };

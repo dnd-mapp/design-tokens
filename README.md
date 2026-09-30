@@ -182,6 +182,8 @@ import light from '@dnd-mapp/design-tokens/light.tokens.json' with { type: 'json
 
 The aliases are resolved, and every token has its own `$type`, so each file stands on its own. The tokens keep their description, and the metadata of their Figma variable in `$extensions`.
 
+A color is in the `oklch` color space, like in the stylesheet. Its `hex` holds the sRGB color as a fallback for tools that can't read OKLCH.
+
 The `font` token of a text style is a DTCG `typography` token. DTCG defines its line height as a multiple of the font size, so a line height of `1.5rem` at a font size of `1rem` becomes `1.5`.
 
 ## Tokens

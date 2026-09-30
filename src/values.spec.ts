@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import type { TokenType } from './tokens.ts';
-import { formatValue, typographyMemberType } from './values.ts';
+import { formatValue, toOklchColor, typographyMemberType } from './values.ts';
 
 function typography(members: object = {}) {
     return {
@@ -60,6 +60,29 @@ describe('formatValue', () => {
         ['typography', typography({ letterSpacing: 0 }), 'its letterSpacing is invalid, a dimension must'],
     ])('should reject the %s %j', (type, value, message) => {
         expect(() => formatValue(type, value)).toThrow(message);
+    });
+});
+
+describe('toOklchColor', () => {
+    it('should convert an sRGB color, and add the hex as a fallback', () => {
+        expect(toOklchColor({ colorSpace: 'srgb', components: [1, 0.5, 0], alpha: 1 })).toEqual({
+            colorSpace: 'oklch',
+            components: [0.7311, 0.18611, 52.78],
+            hex: '#ff8000',
+        });
+    });
+
+    it('should keep the alpha of a color that is not opaque, and lowercase the hex', () => {
+        expect(toOklchColor({ colorSpace: 'srgb', components: [1, 1, 1], alpha: 0.5, hex: '#FFFFFF' })).toEqual({
+            colorSpace: 'oklch',
+            components: [1, 0, 0],
+            alpha: 0.5,
+            hex: '#ffffff',
+        });
+    });
+
+    it('should reject a color that is not sRGB', () => {
+        expect(() => toOklchColor({ colorSpace: 'oklch', components: [1, 0, 0] })).toThrow('the "srgb" color space');
     });
 });
 

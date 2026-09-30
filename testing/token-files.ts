@@ -5,6 +5,11 @@ export function srgb(hex: string, components: number[]) {
     return { colorSpace: 'srgb', components, hex };
 }
 
+/** Creates a DTCG OKLCH color, the way the build writes it. */
+export function oklch(hex: string, components: number[]) {
+    return { colorSpace: 'oklch', components, hex };
+}
+
 /** A small set of token files in the layout of the real ones: primitives, colors in two modes, and shared values. */
 export const tokenFiles: TokenFile[] = [
     {

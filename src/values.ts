@@ -58,13 +58,23 @@ function toOklch(components: number[]): [lightness: number, chroma: number, hue:
     ];
 }
 
+/** A DTCG color in the OKLCH color space, with the sRGB hex as a fallback for tools without OKLCH. */
+export interface OklchColor {
+    colorSpace: 'oklch';
+    components: [lightness: number, chroma: number, hue: number];
+    alpha?: number;
+    hex: string;
+}
+
 /**
- * Formats a DTCG sRGB color as an `oklch()` color, with an alpha when it is not opaque.
+ * Converts a DTCG sRGB color to the OKLCH color space. The alpha is left out when the color is opaque.
  *
- * The precision keeps every 8-bit sRGB color the same when a browser converts it back. A gray has no chroma, so its
- * hue is 0 rather than the noise of the conversion.
+ * The precision keeps every 8-bit sRGB color the same when it is converted back. A gray has no chroma, so its hue is 0
+ * rather than the noise of the conversion.
+ *
+ * @throws {Error} When the value is not a DTCG sRGB color, or its hex does not match its components.
  */
-function formatColor(value: unknown): string {
+export function toOklchColor(value: unknown): OklchColor {
     if (!isObject(value) || value['colorSpace'] !== 'srgb') {
         throw new Error('a color must be an object with the "srgb" color space');
     }
@@ -84,10 +94,20 @@ function formatColor(value: unknown): string {
     }
     const [lightness, chroma, hue] = toOklch(components);
     const c = round(chroma, 5);
-    const h = c === 0 ? 0 : round((hue + 360) % 360, 2) % 360;
-    const oklch = `${round(lightness, 4)} ${c} ${h}`;
 
-    return alpha < 1 ? `oklch(${oklch} / ${round(alpha, 4)})` : `oklch(${oklch})`;
+    return {
+        colorSpace: 'oklch',
+        components: [round(lightness, 4), c, c === 0 ? 0 : round((hue + 360) % 360, 2) % 360],
+        ...(alpha < 1 ? { alpha: round(alpha, 4) } : {}),
+        hex: rgb,
+    };
+}
+
+/** Formats a DTCG sRGB color as an `oklch()` color, with an alpha when it is not opaque. */
+function formatColor(value: unknown): string {
+    const { components, alpha } = toOklchColor(value);
+
+    return alpha === undefined ? `oklch(${components.join(' ')})` : `oklch(${components.join(' ')} / ${alpha})`;
 }
 
 function formatDimension(value: unknown): string {
