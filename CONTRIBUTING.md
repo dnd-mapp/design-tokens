@@ -187,7 +187,7 @@ The build stops with an error, and writes nothing, when a token file breaks a ru
 
 Tests use Vitest. They replace `node:fs/promises` and the console with the mocks in `testing`, so no test touches the real file system. The tests of the Sass module compile it with Sass, to check that stylesheets can use it. Coverage must stay above the thresholds in `vitest.config.ts`.
 
-Check and format the repository with these commands. CI runs `format-check`, `lint-md`, `lint-ts`, `typecheck`, `test-ci`, `build`, and actionlint. Run them yourself before you open a pull request.
+Check and format the repository with these commands. CI runs `format-check`, `lint-md`, `lint-ts`, actionlint, `typecheck`, `test-ci`, and `build`. Run them yourself before you open a pull request.
 
 ```bash
 pnpm run format-check
