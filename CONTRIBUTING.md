@@ -187,7 +187,7 @@ The build stops with an error, and writes nothing, when a token file breaks a ru
 
 Tests use Vitest. They replace `node:fs/promises` and the console with the mocks in `testing`, so no test touches the real file system. The tests of the Sass module compile it with Sass, to check that stylesheets can use it. Coverage must stay above the thresholds in `vitest.config.ts`.
 
-The Vitest globals, such as `describe`, `it`, `expect`, and `vi`, are available in the specs and in `testing` without an import. `tsconfig.json` refers to two projects: `tsconfig.scripts.json` for the build script and the config files, and `tsconfig.spec.json` for the specs and `testing`. Only the second project has the types of the globals, so the build script cannot use them by mistake.
+The Vitest globals, such as `describe`, `it`, `expect`, and `vi`, are available in the specs and in `testing` without an import. `tsconfig.json` refers to two projects: `tsconfig.tools.json` for the build script and the config files, and `tsconfig.spec.json` for the specs and `testing`. Only the second project has the types of the globals, so the build script cannot use them by mistake.
 
 Check and format the repository with these commands. CI runs `format-check`, `lint-md`, `lint-ts`, actionlint, `typecheck`, `test-ci`, and `build`. Run them yourself before you open a pull request.
 
