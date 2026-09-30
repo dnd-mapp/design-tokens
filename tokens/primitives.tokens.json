@@ -1,0 +1,506 @@
+{
+    "neutral": {
+        "50": {
+            "$value": {
+                "colorSpace": "srgb",
+                "components": [0.9725, 0.9765, 0.9843],
+                "hex": "#f8f9fb"
+            },
+            "$extensions": {
+                "com.figma": {
+                    "scopes": [],
+                    "codeSyntax": {
+                        "WEB": "var(--dma-color-neutral-50)"
+                    }
+                }
+            }
+        },
+        "100": {
+            "$value": {
+                "colorSpace": "srgb",
+                "components": [0.9412, 0.949, 0.9647],
+                "hex": "#f0f2f6"
+            },
+            "$extensions": {
+                "com.figma": {
+                    "scopes": [],
+                    "codeSyntax": {
+                        "WEB": "var(--dma-color-neutral-100)"
+                    }
+                }
+            }
+        },
+        "200": {
+            "$value": {
+                "colorSpace": "srgb",
+                "components": [0.8824, 0.898, 0.9255],
+                "hex": "#e1e5ec"
+            },
+            "$extensions": {
+                "com.figma": {
+                    "scopes": [],
+                    "codeSyntax": {
+                        "WEB": "var(--dma-color-neutral-200)"
+                    }
+                }
+            }
+        },
+        "300": {
+            "$value": {
+                "colorSpace": "srgb",
+                "components": [0.7922, 0.8157, 0.8588],
+                "hex": "#cad0db"
+            },
+            "$extensions": {
+                "com.figma": {
+                    "scopes": [],
+                    "codeSyntax": {
+                        "WEB": "var(--dma-color-neutral-300)"
+                    }
+                }
+            }
+        },
+        "400": {
+            "$value": {
+                "colorSpace": "srgb",
+                "components": [0.6039, 0.6392, 0.702],
+                "hex": "#9aa3b3"
+            },
+            "$extensions": {
+                "com.figma": {
+                    "scopes": [],
+                    "codeSyntax": {
+                        "WEB": "var(--dma-color-neutral-400)"
+                    }
+                }
+            }
+        },
+        "500": {
+            "$value": {
+                "colorSpace": "srgb",
+                "components": [0.4314, 0.4667, 0.5373],
+                "hex": "#6e7789"
+            },
+            "$extensions": {
+                "com.figma": {
+                    "scopes": [],
+                    "codeSyntax": {
+                        "WEB": "var(--dma-color-neutral-500)"
+                    }
+                }
+            }
+        },
+        "600": {
+            "$value": {
+                "colorSpace": "srgb",
+                "components": [0.3255, 0.3608, 0.4275],
+                "hex": "#535c6d"
+            },
+            "$extensions": {
+                "com.figma": {
+                    "scopes": [],
+                    "codeSyntax": {
+                        "WEB": "var(--dma-color-neutral-600)"
+                    }
+                }
+            }
+        },
+        "700": {
+            "$value": {
+                "colorSpace": "srgb",
+                "components": [0.2431, 0.2745, 0.3333],
+                "hex": "#3e4655"
+            },
+            "$extensions": {
+                "com.figma": {
+                    "scopes": [],
+                    "codeSyntax": {
+                        "WEB": "var(--dma-color-neutral-700)"
+                    }
+                }
+            }
+        },
+        "800": {
+            "$value": {
+                "colorSpace": "srgb",
+                "components": [0.1647, 0.1882, 0.2314],
+                "hex": "#2a303b"
+            },
+            "$extensions": {
+                "com.figma": {
+                    "scopes": [],
+                    "codeSyntax": {
+                        "WEB": "var(--dma-color-neutral-800)"
+                    }
+                }
+            }
+        },
+        "900": {
+            "$value": {
+                "colorSpace": "srgb",
+                "components": [0.1098, 0.1255, 0.1608],
+                "hex": "#1c2029"
+            },
+            "$extensions": {
+                "com.figma": {
+                    "scopes": [],
+                    "codeSyntax": {
+                        "WEB": "var(--dma-color-neutral-900)"
+                    }
+                }
+            }
+        },
+        "950": {
+            "$value": {
+                "colorSpace": "srgb",
+                "components": [0.0706, 0.0824, 0.1059],
+                "hex": "#12151b"
+            },
+            "$extensions": {
+                "com.figma": {
+                    "scopes": [],
+                    "codeSyntax": {
+                        "WEB": "var(--dma-color-neutral-950)"
+                    }
+                }
+            }
+        },
+        "$type": "color"
+    },
+    "amber": {
+        "50": {
+            "$value": {
+                "colorSpace": "srgb",
+                "components": [1, 0.9725, 0.9216],
+                "hex": "#fff8eb"
+            },
+            "$extensions": {
+                "com.figma": {
+                    "scopes": [],
+                    "codeSyntax": {
+                        "WEB": "var(--dma-color-amber-50)"
+                    }
+                }
+            }
+        },
+        "100": {
+            "$value": {
+                "colorSpace": "srgb",
+                "components": [0.9961, 0.9373, 0.7804],
+                "hex": "#feefc7"
+            },
+            "$extensions": {
+                "com.figma": {
+                    "scopes": [],
+                    "codeSyntax": {
+                        "WEB": "var(--dma-color-amber-100)"
+                    }
+                }
+            }
+        },
+        "200": {
+            "$value": {
+                "colorSpace": "srgb",
+                "components": [0.9922, 0.8627, 0.5412],
+                "hex": "#fddc8a"
+            },
+            "$extensions": {
+                "com.figma": {
+                    "scopes": [],
+                    "codeSyntax": {
+                        "WEB": "var(--dma-color-amber-200)"
+                    }
+                }
+            }
+        },
+        "300": {
+            "$value": {
+                "colorSpace": "srgb",
+                "components": [0.9882, 0.7725, 0.302],
+                "hex": "#fcc54d"
+            },
+            "$extensions": {
+                "com.figma": {
+                    "scopes": [],
+                    "codeSyntax": {
+                        "WEB": "var(--dma-color-amber-300)"
+                    }
+                }
+            }
+        },
+        "400": {
+            "$value": {
+                "colorSpace": "srgb",
+                "components": [0.9765, 0.6745, 0.1216],
+                "hex": "#f9ac1f"
+            },
+            "$extensions": {
+                "com.figma": {
+                    "scopes": [],
+                    "codeSyntax": {
+                        "WEB": "var(--dma-color-amber-400)"
+                    }
+                }
+            }
+        },
+        "500": {
+            "$value": {
+                "colorSpace": "srgb",
+                "components": [0.8784, 0.5569, 0.0431],
+                "hex": "#e08e0b"
+            },
+            "$extensions": {
+                "com.figma": {
+                    "scopes": [],
+                    "codeSyntax": {
+                        "WEB": "var(--dma-color-amber-500)"
+                    }
+                }
+            }
+        },
+        "600": {
+            "$value": {
+                "colorSpace": "srgb",
+                "components": [0.7216, 0.4196, 0.0235],
+                "hex": "#b86b06"
+            },
+            "$extensions": {
+                "com.figma": {
+                    "scopes": [],
+                    "codeSyntax": {
+                        "WEB": "var(--dma-color-amber-600)"
+                    }
+                }
+            }
+        },
+        "700": {
+            "$value": {
+                "colorSpace": "srgb",
+                "components": [0.5725, 0.3137, 0.0353],
+                "hex": "#925009"
+            },
+            "$extensions": {
+                "com.figma": {
+                    "scopes": [],
+                    "codeSyntax": {
+                        "WEB": "var(--dma-color-amber-700)"
+                    }
+                }
+            }
+        },
+        "800": {
+            "$value": {
+                "colorSpace": "srgb",
+                "components": [0.4667, 0.2471, 0.0549],
+                "hex": "#773f0e"
+            },
+            "$extensions": {
+                "com.figma": {
+                    "scopes": [],
+                    "codeSyntax": {
+                        "WEB": "var(--dma-color-amber-800)"
+                    }
+                }
+            }
+        },
+        "900": {
+            "$value": {
+                "colorSpace": "srgb",
+                "components": [0.3843, 0.2078, 0.0588],
+                "hex": "#62350f"
+            },
+            "$extensions": {
+                "com.figma": {
+                    "scopes": [],
+                    "codeSyntax": {
+                        "WEB": "var(--dma-color-amber-900)"
+                    }
+                }
+            }
+        },
+        "950": {
+            "$value": {
+                "colorSpace": "srgb",
+                "components": [0.2196, 0.102, 0.0118],
+                "hex": "#381a03"
+            },
+            "$extensions": {
+                "com.figma": {
+                    "scopes": [],
+                    "codeSyntax": {
+                        "WEB": "var(--dma-color-amber-950)"
+                    }
+                }
+            }
+        },
+        "$type": "color"
+    },
+    "red": {
+        "50": {
+            "$value": {
+                "colorSpace": "srgb",
+                "components": [1, 0.9529, 0.9373],
+                "hex": "#fff3ef"
+            },
+            "$extensions": {
+                "com.figma": {
+                    "scopes": [],
+                    "codeSyntax": {
+                        "WEB": "var(--dma-color-red-50)"
+                    }
+                }
+            }
+        },
+        "100": {
+            "$value": {
+                "colorSpace": "srgb",
+                "components": [1, 0.898, 0.8706],
+                "hex": "#ffe5de"
+            },
+            "$extensions": {
+                "com.figma": {
+                    "scopes": [],
+                    "codeSyntax": {
+                        "WEB": "var(--dma-color-red-100)"
+                    }
+                }
+            }
+        },
+        "200": {
+            "$value": {
+                "colorSpace": "srgb",
+                "components": [1, 0.8078, 0.7608],
+                "hex": "#ffcec2"
+            },
+            "$extensions": {
+                "com.figma": {
+                    "scopes": [],
+                    "codeSyntax": {
+                        "WEB": "var(--dma-color-red-200)"
+                    }
+                }
+            }
+        },
+        "300": {
+            "$value": {
+                "colorSpace": "srgb",
+                "components": [0.9961, 0.6667, 0.5961],
+                "hex": "#feaa98"
+            },
+            "$extensions": {
+                "com.figma": {
+                    "scopes": [],
+                    "codeSyntax": {
+                        "WEB": "var(--dma-color-red-300)"
+                    }
+                }
+            }
+        },
+        "400": {
+            "$value": {
+                "colorSpace": "srgb",
+                "components": [0.9765, 0.4471, 0.3608],
+                "hex": "#f9725c"
+            },
+            "$extensions": {
+                "com.figma": {
+                    "scopes": [],
+                    "codeSyntax": {
+                        "WEB": "var(--dma-color-red-400)"
+                    }
+                }
+            }
+        },
+        "500": {
+            "$value": {
+                "colorSpace": "srgb",
+                "components": [0.9373, 0.2667, 0.1961],
+                "hex": "#ef4432"
+            },
+            "$extensions": {
+                "com.figma": {
+                    "scopes": [],
+                    "codeSyntax": {
+                        "WEB": "var(--dma-color-red-500)"
+                    }
+                }
+            }
+        },
+        "600": {
+            "$value": {
+                "colorSpace": "srgb",
+                "components": [0.8431, 0.1294, 0.102],
+                "hex": "#d7211a"
+            },
+            "$extensions": {
+                "com.figma": {
+                    "scopes": [],
+                    "codeSyntax": {
+                        "WEB": "var(--dma-color-red-600)"
+                    }
+                }
+            }
+        },
+        "700": {
+            "$value": {
+                "colorSpace": "srgb",
+                "components": [0.7176, 0.0627, 0.0824],
+                "hex": "#b71015"
+            },
+            "$extensions": {
+                "com.figma": {
+                    "scopes": [],
+                    "codeSyntax": {
+                        "WEB": "var(--dma-color-red-700)"
+                    }
+                }
+            }
+        },
+        "800": {
+            "$value": {
+                "colorSpace": "srgb",
+                "components": [0.5922, 0.0745, 0.0941],
+                "hex": "#971318"
+            },
+            "$extensions": {
+                "com.figma": {
+                    "scopes": [],
+                    "codeSyntax": {
+                        "WEB": "var(--dma-color-red-800)"
+                    }
+                }
+            }
+        },
+        "900": {
+            "$value": {
+                "colorSpace": "srgb",
+                "components": [0.4863, 0.0941, 0.102],
+                "hex": "#7c181a"
+            },
+            "$extensions": {
+                "com.figma": {
+                    "scopes": [],
+                    "codeSyntax": {
+                        "WEB": "var(--dma-color-red-900)"
+                    }
+                }
+            }
+        },
+        "950": {
+            "$value": {
+                "colorSpace": "srgb",
+                "components": [0.2863, 0.051, 0.0588],
+                "hex": "#490d0f"
+            },
+            "$extensions": {
+                "com.figma": {
+                    "scopes": [],
+                    "codeSyntax": {
+                        "WEB": "var(--dma-color-red-950)"
+                    }
+                }
+            }
+        },
+        "$type": "color"
+    }
+}

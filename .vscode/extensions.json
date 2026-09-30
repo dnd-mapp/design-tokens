@@ -1,0 +1,10 @@
+{
+    "recommendations": [
+        "esbenp.prettier-vscode",
+        "editorconfig.editorconfig",
+        "davidanson.vscode-markdownlint",
+        "dbaeumer.vscode-eslint",
+        "vitest.explorer",
+        "github.vscode-github-actions"
+    ]
+}

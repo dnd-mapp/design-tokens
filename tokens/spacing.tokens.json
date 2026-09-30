@@ -1,0 +1,155 @@
+{
+    "spacing": {
+        "0": {
+            "$value": {
+                "value": 0,
+                "unit": "rem"
+            },
+            "$description": "0 (0px) in code.",
+            "$extensions": {
+                "com.figma": {
+                    "scopes": ["GAP"],
+                    "codeSyntax": {
+                        "WEB": "var(--dma-spacing-0)"
+                    }
+                }
+            }
+        },
+        "2": {
+            "$value": {
+                "value": 0.125,
+                "unit": "rem"
+            },
+            "$description": "0.125rem (2px) in code.",
+            "$extensions": {
+                "com.figma": {
+                    "scopes": ["GAP"],
+                    "codeSyntax": {
+                        "WEB": "var(--dma-spacing-2)"
+                    }
+                }
+            }
+        },
+        "4": {
+            "$value": {
+                "value": 0.25,
+                "unit": "rem"
+            },
+            "$description": "0.25rem (4px) in code.",
+            "$extensions": {
+                "com.figma": {
+                    "scopes": ["GAP"],
+                    "codeSyntax": {
+                        "WEB": "var(--dma-spacing-4)"
+                    }
+                }
+            }
+        },
+        "8": {
+            "$value": {
+                "value": 0.5,
+                "unit": "rem"
+            },
+            "$description": "0.5rem (8px) in code.",
+            "$extensions": {
+                "com.figma": {
+                    "scopes": ["GAP"],
+                    "codeSyntax": {
+                        "WEB": "var(--dma-spacing-8)"
+                    }
+                }
+            }
+        },
+        "12": {
+            "$value": {
+                "value": 0.75,
+                "unit": "rem"
+            },
+            "$description": "0.75rem (12px) in code.",
+            "$extensions": {
+                "com.figma": {
+                    "scopes": ["GAP"],
+                    "codeSyntax": {
+                        "WEB": "var(--dma-spacing-12)"
+                    }
+                }
+            }
+        },
+        "16": {
+            "$value": {
+                "value": 1,
+                "unit": "rem"
+            },
+            "$description": "1rem (16px) in code.",
+            "$extensions": {
+                "com.figma": {
+                    "scopes": ["GAP"],
+                    "codeSyntax": {
+                        "WEB": "var(--dma-spacing-16)"
+                    }
+                }
+            }
+        },
+        "24": {
+            "$value": {
+                "value": 1.5,
+                "unit": "rem"
+            },
+            "$description": "1.5rem (24px) in code.",
+            "$extensions": {
+                "com.figma": {
+                    "scopes": ["GAP"],
+                    "codeSyntax": {
+                        "WEB": "var(--dma-spacing-24)"
+                    }
+                }
+            }
+        },
+        "32": {
+            "$value": {
+                "value": 2,
+                "unit": "rem"
+            },
+            "$description": "2rem (32px) in code.",
+            "$extensions": {
+                "com.figma": {
+                    "scopes": ["GAP"],
+                    "codeSyntax": {
+                        "WEB": "var(--dma-spacing-32)"
+                    }
+                }
+            }
+        },
+        "48": {
+            "$value": {
+                "value": 3,
+                "unit": "rem"
+            },
+            "$description": "3rem (48px) in code.",
+            "$extensions": {
+                "com.figma": {
+                    "scopes": ["GAP"],
+                    "codeSyntax": {
+                        "WEB": "var(--dma-spacing-48)"
+                    }
+                }
+            }
+        },
+        "64": {
+            "$value": {
+                "value": 4,
+                "unit": "rem"
+            },
+            "$description": "4rem (64px) in code.",
+            "$extensions": {
+                "com.figma": {
+                    "scopes": ["GAP"],
+                    "codeSyntax": {
+                        "WEB": "var(--dma-spacing-64)"
+                    }
+                }
+            }
+        },
+        "$type": "dimension"
+    }
+}

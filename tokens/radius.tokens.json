@@ -1,0 +1,110 @@
+{
+    "radius": {
+        "0": {
+            "$value": {
+                "value": 0,
+                "unit": "rem"
+            },
+            "$description": "0 (0px) in code.",
+            "$extensions": {
+                "com.figma": {
+                    "scopes": ["CORNER_RADIUS"],
+                    "codeSyntax": {
+                        "WEB": "var(--dma-radius-0)"
+                    }
+                }
+            }
+        },
+        "2": {
+            "$value": {
+                "value": 0.125,
+                "unit": "rem"
+            },
+            "$description": "0.125rem (2px) in code.",
+            "$extensions": {
+                "com.figma": {
+                    "scopes": ["CORNER_RADIUS"],
+                    "codeSyntax": {
+                        "WEB": "var(--dma-radius-2)"
+                    }
+                }
+            }
+        },
+        "4": {
+            "$value": {
+                "value": 0.25,
+                "unit": "rem"
+            },
+            "$description": "0.25rem (4px) in code.",
+            "$extensions": {
+                "com.figma": {
+                    "scopes": ["CORNER_RADIUS"],
+                    "codeSyntax": {
+                        "WEB": "var(--dma-radius-4)"
+                    }
+                }
+            }
+        },
+        "8": {
+            "$value": {
+                "value": 0.5,
+                "unit": "rem"
+            },
+            "$description": "0.5rem (8px) in code.",
+            "$extensions": {
+                "com.figma": {
+                    "scopes": ["CORNER_RADIUS"],
+                    "codeSyntax": {
+                        "WEB": "var(--dma-radius-8)"
+                    }
+                }
+            }
+        },
+        "12": {
+            "$value": {
+                "value": 0.75,
+                "unit": "rem"
+            },
+            "$description": "0.75rem (12px) in code.",
+            "$extensions": {
+                "com.figma": {
+                    "scopes": ["CORNER_RADIUS"],
+                    "codeSyntax": {
+                        "WEB": "var(--dma-radius-12)"
+                    }
+                }
+            }
+        },
+        "16": {
+            "$value": {
+                "value": 1,
+                "unit": "rem"
+            },
+            "$description": "1rem (16px) in code.",
+            "$extensions": {
+                "com.figma": {
+                    "scopes": ["CORNER_RADIUS"],
+                    "codeSyntax": {
+                        "WEB": "var(--dma-radius-16)"
+                    }
+                }
+            }
+        },
+        "$type": "dimension",
+        "full": {
+            "$value": {
+                "value": 9999,
+                "unit": "px"
+            },
+            "$description": "9999px in code, which rounds any size into a pill or circle.",
+            "$extensions": {
+                "com.figma": {
+                    "scopes": ["CORNER_RADIUS"],
+                    "codeSyntax": {
+                        "WEB": "var(--dma-radius-full)"
+                    }
+                }
+            }
+        }
+    }
+}

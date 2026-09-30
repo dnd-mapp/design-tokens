@@ -1,0 +1,275 @@
+{
+    "color": {
+        "$type": "color",
+        "background": {
+            "default": {
+                "$value": "{neutral.50}",
+                "$description": "Default page and surface background.",
+                "$extensions": {
+                    "com.figma": {
+                        "scopes": ["FRAME_FILL", "SHAPE_FILL"],
+                        "codeSyntax": {
+                            "WEB": "var(--dma-color-background-default)"
+                        }
+                    }
+                }
+            },
+            "accent": {
+                "$value": "{red.800}",
+                "$description": "Fill of primary buttons and other accent surfaces. Put color/text/on-accent on it.",
+                "$extensions": {
+                    "com.figma": {
+                        "scopes": ["FRAME_FILL", "SHAPE_FILL"],
+                        "codeSyntax": {
+                            "WEB": "var(--dma-color-background-accent)"
+                        }
+                    }
+                }
+            },
+            "surface": {
+                "$value": "{neutral.100}",
+                "$description": "Fill of cards, panels, and secondary controls. It barely differs from color/background/default, so outline it with color/border/subtle.",
+                "$extensions": {
+                    "com.figma": {
+                        "scopes": ["FRAME_FILL", "SHAPE_FILL"],
+                        "codeSyntax": {
+                            "WEB": "var(--dma-color-background-surface)"
+                        }
+                    }
+                }
+            },
+            "disabled": {
+                "$value": "{neutral.200}",
+                "$description": "Fill of disabled controls. Put color/text/disabled on it.",
+                "$extensions": {
+                    "com.figma": {
+                        "scopes": ["FRAME_FILL", "SHAPE_FILL"],
+                        "codeSyntax": {
+                            "WEB": "var(--dma-color-background-disabled)"
+                        }
+                    }
+                }
+            },
+            "accent-hover": {
+                "$value": "{red.900}",
+                "$description": "Fill of color/background/accent controls on hover. Darker in Light mode and lighter in Dark mode. Put color/text/on-accent on it.",
+                "$extensions": {
+                    "com.figma": {
+                        "scopes": ["FRAME_FILL", "SHAPE_FILL"],
+                        "codeSyntax": {
+                            "WEB": "var(--dma-color-background-accent-hover)"
+                        }
+                    }
+                }
+            },
+            "accent-pressed": {
+                "$value": "{red.950}",
+                "$description": "Fill of color/background/accent controls while pressed. Darker in Light mode and lighter in Dark mode. Put color/text/on-accent on it.",
+                "$extensions": {
+                    "com.figma": {
+                        "scopes": ["FRAME_FILL", "SHAPE_FILL"],
+                        "codeSyntax": {
+                            "WEB": "var(--dma-color-background-accent-pressed)"
+                        }
+                    }
+                }
+            },
+            "neutral-hover": {
+                "$value": "{neutral.200}",
+                "$description": "Fill of neutral controls, such as Secondary and Ghost buttons, on hover. Put color/text/default on it.",
+                "$extensions": {
+                    "com.figma": {
+                        "scopes": ["FRAME_FILL", "SHAPE_FILL"],
+                        "codeSyntax": {
+                            "WEB": "var(--dma-color-background-neutral-hover)"
+                        }
+                    }
+                }
+            },
+            "neutral-pressed": {
+                "$value": "{neutral.300}",
+                "$description": "Fill of neutral controls, such as Secondary and Ghost buttons, while pressed. Put color/text/default on it.",
+                "$extensions": {
+                    "com.figma": {
+                        "scopes": ["FRAME_FILL", "SHAPE_FILL"],
+                        "codeSyntax": {
+                            "WEB": "var(--dma-color-background-neutral-pressed)"
+                        }
+                    }
+                }
+            },
+            "danger": {
+                "$value": "{red.600}",
+                "$description": "Fill of danger buttons and other destructive actions, such as deleting a map. Put color/text/on-danger on it.",
+                "$extensions": {
+                    "com.figma": {
+                        "scopes": ["FRAME_FILL", "SHAPE_FILL"],
+                        "codeSyntax": {
+                            "WEB": "var(--dma-color-background-danger)"
+                        }
+                    }
+                }
+            },
+            "danger-hover": {
+                "$value": "{red.700}",
+                "$description": "Fill of color/background/danger controls on hover. Darker in Light mode and lighter in Dark mode. Put color/text/on-danger on it.",
+                "$extensions": {
+                    "com.figma": {
+                        "scopes": ["FRAME_FILL", "SHAPE_FILL"],
+                        "codeSyntax": {
+                            "WEB": "var(--dma-color-background-danger-hover)"
+                        }
+                    }
+                }
+            },
+            "danger-pressed": {
+                "$value": "{red.800}",
+                "$description": "Fill of color/background/danger controls while pressed. Darker in Light mode and lighter in Dark mode. Put color/text/on-danger on it.",
+                "$extensions": {
+                    "com.figma": {
+                        "scopes": ["FRAME_FILL", "SHAPE_FILL"],
+                        "codeSyntax": {
+                            "WEB": "var(--dma-color-background-danger-pressed)"
+                        }
+                    }
+                }
+            },
+            "inverse": {
+                "$value": "{neutral.900}",
+                "$description": "Fill of tooltips and other small elements that must stand out from the page in both modes. It swaps color/text/default and color/background/default. Put color/text/on-inverse on it.",
+                "$extensions": {
+                    "com.figma": {
+                        "scopes": ["FRAME_FILL", "SHAPE_FILL"],
+                        "codeSyntax": {
+                            "WEB": "var(--dma-color-background-inverse)"
+                        }
+                    }
+                }
+            }
+        },
+        "text": {
+            "default": {
+                "$value": "{neutral.900}",
+                "$description": "Default text on color/background/default.",
+                "$extensions": {
+                    "com.figma": {
+                        "scopes": ["SHAPE_FILL", "TEXT_FILL"],
+                        "codeSyntax": {
+                            "WEB": "var(--dma-color-text-default)"
+                        }
+                    }
+                }
+            },
+            "on-accent": {
+                "$value": "{neutral.50}",
+                "$description": "Text and icons on color/background/accent and its hover and pressed states. Meets 4.5:1 on all three in both modes.",
+                "$extensions": {
+                    "com.figma": {
+                        "scopes": ["SHAPE_FILL", "TEXT_FILL"],
+                        "codeSyntax": {
+                            "WEB": "var(--dma-color-text-on-accent)"
+                        }
+                    }
+                }
+            },
+            "muted": {
+                "$value": "{neutral.600}",
+                "$description": "Secondary text, such as hints, captions, and metadata. Meets 4.5:1 against color/background/default and color/background/surface in both modes.",
+                "$extensions": {
+                    "com.figma": {
+                        "scopes": ["SHAPE_FILL", "TEXT_FILL"],
+                        "codeSyntax": {
+                            "WEB": "var(--dma-color-text-muted)"
+                        }
+                    }
+                }
+            },
+            "disabled": {
+                "$value": "{neutral.400}",
+                "$description": "Labels and icons of disabled controls. Exempt from contrast minimums (WCAG 1.4.3), so never use it for active text.",
+                "$extensions": {
+                    "com.figma": {
+                        "scopes": ["SHAPE_FILL", "TEXT_FILL"],
+                        "codeSyntax": {
+                            "WEB": "var(--dma-color-text-disabled)"
+                        }
+                    }
+                }
+            },
+            "on-danger": {
+                "$value": "{neutral.50}",
+                "$description": "Text and icons on color/background/danger and its hover and pressed states. Meets 4.5:1 on all three in both modes.",
+                "$extensions": {
+                    "com.figma": {
+                        "scopes": ["SHAPE_FILL", "TEXT_FILL"],
+                        "codeSyntax": {
+                            "WEB": "var(--dma-color-text-on-danger)"
+                        }
+                    }
+                }
+            },
+            "on-inverse": {
+                "$value": "{neutral.50}",
+                "$description": "Text and icons on color/background/inverse. Meets 4.5:1 on it in both modes.",
+                "$extensions": {
+                    "com.figma": {
+                        "scopes": ["SHAPE_FILL", "TEXT_FILL"],
+                        "codeSyntax": {
+                            "WEB": "var(--dma-color-text-on-inverse)"
+                        }
+                    }
+                }
+            }
+        },
+        "border": {
+            "subtle": {
+                "$value": "{neutral.200}",
+                "$description": "Decorative edges, such as dividers and the outlines of cards and panels. Not for control boundaries.",
+                "$extensions": {
+                    "com.figma": {
+                        "scopes": ["STROKE_COLOR"],
+                        "codeSyntax": {
+                            "WEB": "var(--dma-color-border-subtle)"
+                        }
+                    }
+                }
+            },
+            "default": {
+                "$value": "{neutral.500}",
+                "$description": "Boundaries of fields, checkboxes, and other controls. Meets 3:1 against color/background/default in both modes.",
+                "$extensions": {
+                    "com.figma": {
+                        "scopes": ["STROKE_COLOR"],
+                        "codeSyntax": {
+                            "WEB": "var(--dma-color-border-default)"
+                        }
+                    }
+                }
+            },
+            "focus": {
+                "$value": "{amber.600}",
+                "$description": "Focus rings on buttons, fields, checkboxes, and other controls. Meets 3:1 against color/background/default in both modes.",
+                "$extensions": {
+                    "com.figma": {
+                        "scopes": ["STROKE_COLOR"],
+                        "codeSyntax": {
+                            "WEB": "var(--dma-color-border-focus)"
+                        }
+                    }
+                }
+            },
+            "disabled": {
+                "$value": "{neutral.300}",
+                "$description": "Boundaries of disabled controls. Exempt from the 3:1 minimum (WCAG 1.4.11).",
+                "$extensions": {
+                    "com.figma": {
+                        "scopes": ["STROKE_COLOR"],
+                        "codeSyntax": {
+                            "WEB": "var(--dma-color-border-disabled)"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
