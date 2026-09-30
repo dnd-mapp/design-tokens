@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [1.0.0] - 2026-09-30
+
 ### Added
 
 - The 59 semantic tokens of the `Design system` Figma library: 22 colors, 10 spacing steps, 20 typography tokens, and 7 radius steps.
@@ -20,4 +22,5 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - A `font` token for each text style, such as `--dma-text-body-medium-font`, with a CSS `font` shorthand composed from the tokens of the style. The DTCG token files hold it as a `typography` token.
 - `fonts.css`, available as `@dnd-mapp/design-tokens/fonts.css`. It declares the variable Inter and JetBrains Mono fonts, upright and italic, with a `@font-face` rule for each subset and style. The package includes the font files and their SIL Open Font License 1.1.
 
-[Unreleased]: https://github.com/dnd-mapp/design-tokens/commits/main
+[Unreleased]: https://github.com/dnd-mapp/design-tokens/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/dnd-mapp/design-tokens/releases/tag/v1.0.0
