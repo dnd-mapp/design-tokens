@@ -91,7 +91,7 @@ export const mkdir = ((path, options) =>
 
 export const readdir = ((path) => perform({ operation: 'readdir', path: pathOf(path) })) as typeof FsPromises.readdir;
 
-export const readFile = ((path, options) =>
+export const readFile = ((path: PathLike | FsPromises.FileHandle, options?: unknown) =>
     perform({ operation: 'readFile', path: pathOf(path), options })) as typeof FsPromises.readFile;
 
 export const rm = ((path, options) =>
